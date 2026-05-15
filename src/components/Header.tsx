@@ -59,7 +59,7 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:block">
-            <Link href="/book-a-call" className="btn-primary py-2 text-xs">
+            <Link href="/book-a-call" className="btn-primary py-2 text-xs" data-ga-cta="header_book_call">
               Book a Planning Call
             </Link>
           </div>
@@ -96,7 +96,7 @@ export default function Header() {
               </Link>
             ))}
             <div className="mt-3 pt-3 border-t border-ink-100">
-              <Link href="/book-a-call" className="btn-primary w-full justify-center">
+              <Link href="/book-a-call" className="btn-primary w-full justify-center" data-ga-cta="header_mobile_book_call">
                 Book a Planning Call
               </Link>
             </div>

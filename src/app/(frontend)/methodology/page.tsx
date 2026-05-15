@@ -59,7 +59,7 @@ export default function MethodologyPage() {
                 Bring us your concept and we run it through all eight layers. The depth of each
                 layer scales with the planning package you choose.
               </p>
-              <Link href="/consulting" className="btn-primary text-sm py-2">
+              <Link href="/consulting" className="btn-primary text-sm py-2" data-ga-cta="methodology_consulting">
                 See planning packages →
               </Link>
             </div>
@@ -71,7 +71,7 @@ export default function MethodologyPage() {
                 Every business concept in our marketplace has already been run through this
                 framework. You see the results — including the risks — before you enquire.
               </p>
-              <Link href="/concepts" className="btn-secondary text-sm py-2">
+              <Link href="/concepts" className="btn-secondary text-sm py-2" data-ga-cta="methodology_concepts">
                 Browse concepts →
               </Link>
             </div>

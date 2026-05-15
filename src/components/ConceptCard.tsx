@@ -13,6 +13,8 @@ type Props = {
   difficultyLevel?: string
   territoryStatus: 'available' | 'limited' | 'sold'
   shortDescription: string
+  /** `data-ga-cta` for CtaClickListener (e.g. `home_featured_concept_slug`) */
+  gaCta?: string
 }
 
 const TERRITORY_BADGE: Record<string, { label: string; className: string }> = {
@@ -33,6 +35,7 @@ export default function ConceptCard({
   difficultyLevel,
   territoryStatus,
   shortDescription,
+  gaCta,
 }: Props) {
   const badge = TERRITORY_BADGE[territoryStatus] ?? TERRITORY_BADGE.available
 
@@ -40,6 +43,7 @@ export default function ConceptCard({
     <Link
       href={`/concepts/${slug}`}
       className="card flex flex-col hover:border-barn-400 transition-colors duration-150 group"
+      {...(gaCta ? { 'data-ga-cta': gaCta } : {})}
     >
       {/* Category bar */}
       <div className="h-1 bg-barn-600" />

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { getSiteUrl } from '@/lib/site'
+import { getPublicOriginForRequest } from '@/lib/site'
 import { getPayloadClient } from '@/lib/payload'
 import type { Where } from 'payload'
 
@@ -34,7 +34,7 @@ function urlForPath(base: string, path: string): string {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = getSiteUrl()
+  const base = (await getPublicOriginForRequest()).replace(/\/$/, '')
   const now = new Date()
 
   const entries: MetadataRoute.Sitemap = STATIC.map(({ path, changeFrequency, priority }) => ({

@@ -82,7 +82,11 @@ export default function PackageCard({
           {priceLabel && (
             <p className="text-sm font-semibold text-ink-700 mb-3">{priceLabel}</p>
           )}
-          <Link href={`/consulting/${slug}`} className={highlighted ? 'btn-primary w-full justify-center' : 'btn-secondary w-full justify-center'}>
+          <Link
+            href={`/consulting/${slug}`}
+            className={highlighted ? 'btn-primary w-full justify-center' : 'btn-secondary w-full justify-center'}
+            data-ga-cta={`package_card_view_${slug}`}
+          >
             {ctaLabel}
           </Link>
         </div>

@@ -84,10 +84,10 @@ export default function AboutPage() {
               honest questions to find out if we are the right fit for what you are building.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link href="/book-a-call" className="btn-primary">
+              <Link href="/book-a-call" className="btn-primary" data-ga-cta="about_book_call">
                 Book a planning call →
               </Link>
-              <Link href="/consulting" className="btn-secondary">
+              <Link href="/consulting" className="btn-secondary" data-ga-cta="about_consulting">
                 See our packages
               </Link>
             </div>

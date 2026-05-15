@@ -1,8 +1,10 @@
 import type { MetadataRoute } from 'next'
-import { getSiteUrl } from '@/lib/site'
+import { getPublicOriginForRequest } from '@/lib/site'
 
-export default function robots(): MetadataRoute.Robots {
-  const base = getSiteUrl()
+export const dynamic = 'force-dynamic'
+
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const base = (await getPublicOriginForRequest()).replace(/\/$/, '')
 
   return {
     rules: [

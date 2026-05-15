@@ -1,6 +1,8 @@
 import Link from 'next/link'
 
-const LINKS = {
+type FooterLink = { label: string; href: string; gaCta?: string }
+
+const LINKS: Record<string, FooterLink[]> = {
   Consulting: [
     { label: 'All Packages', href: '/consulting' },
     { label: 'Basic Plan', href: '/consulting/basic' },
@@ -11,7 +13,7 @@ const LINKS = {
   'Business Concepts': [
     { label: 'Browse All Concepts', href: '/concepts' },
     { label: 'Browse by Category', href: '/concepts' },
-    { label: 'Submit Your Idea', href: '/book-a-call' },
+    { label: 'Submit Your Idea', href: '/book-a-call', gaCta: 'footer_submit_idea' },
   ],
   Company: [
     { label: 'How It Works', href: '/how-it-works' },
@@ -42,7 +44,7 @@ export default function Footer() {
             <p className="text-sm text-ink-400 leading-relaxed mb-4">
               Better questions. Better business starts.
             </p>
-            <Link href="/book-a-call" className="btn-primary text-xs py-2">
+            <Link href="/book-a-call" className="btn-primary text-xs py-2" data-ga-cta="footer_book_call">
               Book a Planning Call
             </Link>
           </div>
@@ -59,6 +61,7 @@ export default function Footer() {
                     <Link
                       href={item.href}
                       className="text-sm text-ink-400 hover:text-white transition-colors"
+                      {...(item.gaCta ? { 'data-ga-cta': item.gaCta } : {})}
                     >
                       {item.label}
                     </Link>

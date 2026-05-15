@@ -1,7 +1,11 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { Fraunces, Inter, IBM_Plex_Mono } from 'next/font/google'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
+import GtagPageView from '@/components/analytics/GtagPageView'
+import CtaClickListener from '@/components/analytics/CtaClickListener'
 import { getSiteUrl } from '@/lib/site'
 import '../globals.css'
 
@@ -84,6 +88,11 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
         />
       </head>
       <body className="min-h-screen flex flex-col">
+        <GoogleAnalytics />
+        <Suspense fallback={null}>
+          <GtagPageView />
+        </Suspense>
+        <CtaClickListener />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

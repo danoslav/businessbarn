@@ -301,7 +301,7 @@ export default async function ConsultingPackagePage({ params }: { params: Promis
                   </ul>
                   <p className="text-xs text-ink-400 mt-3">
                     Need these?{' '}
-                    <Link href="/consulting" className="underline hover:text-ink-700">
+                    <Link href="/consulting" className="underline hover:text-ink-700" data-ga-cta={`consulting_detail_compare_${slug}`}>
                       Compare all packages →
                     </Link>
                   </p>
@@ -334,14 +334,18 @@ export default async function ConsultingPackagePage({ params }: { params: Promis
                     {data.priceLabel}
                   </div>
                 )}
-                <Link href="/book-a-call" className="btn-primary w-full justify-center">
+                <Link
+                  href="/book-a-call"
+                  className="btn-primary w-full justify-center"
+                  data-ga-cta={`consulting_detail_book_call_${slug}`}
+                >
                   {data.ctaLabel}
                 </Link>
                 <p className="text-xs text-ink-400 text-center">
                   Free 20-min fit call. No obligation.
                 </p>
                 <div className="border-t border-ink-100 pt-4">
-                  <Link href="/consulting" className="btn-ghost text-ink-500 text-xs">
+                  <Link href="/consulting" className="btn-ghost text-ink-500 text-xs" data-ga-cta="consulting_detail_packages_back">
                     ← Compare all packages
                   </Link>
                 </div>

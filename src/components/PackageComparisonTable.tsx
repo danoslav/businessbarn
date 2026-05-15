@@ -43,7 +43,11 @@ export default function PackageComparisonTable() {
                   pkg.highlighted ? 'text-barn-600' : 'text-ink-900'
                 }`}
               >
-                <Link href={`/consulting/${pkg.slug}`} className="hover:underline">
+                <Link
+                  href={`/consulting/${pkg.slug}`}
+                  className="hover:underline"
+                  data-ga-cta={`comparison_header_${pkg.slug}`}
+                >
                   {pkg.name}
                 </Link>
               </th>
@@ -76,6 +80,7 @@ export default function PackageComparisonTable() {
                 <Link
                   href={`/consulting/${pkg.slug}`}
                   className={pkg.highlighted ? 'btn-primary text-xs py-2' : 'btn-secondary text-xs py-2'}
+                  data-ga-cta={`comparison_view_${pkg.slug}`}
                 >
                   View {pkg.name}
                 </Link>

@@ -135,8 +135,13 @@ export default async function ConsultingPage() {
         heading="Choose the depth that fits your decision"
         body="Every engagement runs through the same eight-question framework. You choose how deep to go."
         ctas={[
-          { label: 'Book a planning call', href: '/book-a-call' },
-          { label: 'Learn our methodology', href: '/methodology', variant: 'outline-white' },
+          { label: 'Book a planning call', href: '/book-a-call', gaCta: 'consulting_hero_book_call' },
+          {
+            label: 'Learn our methodology',
+            href: '/methodology',
+            variant: 'outline-white',
+            gaCta: 'consulting_hero_methodology',
+          },
         ]}
       />
 
@@ -154,7 +159,11 @@ export default async function ConsultingPage() {
           <div className="mt-8 text-center">
             <p className="text-sm text-ink-500">
               Not sure which package fits your situation?{' '}
-              <Link href="/book-a-call" className="text-barn-600 underline hover:text-barn-800">
+              <Link
+                href="/book-a-call"
+                className="text-barn-600 underline hover:text-barn-800"
+                data-ga-cta="consulting_fit_call_link"
+              >
                 Book a free 20-minute fit call →
               </Link>
             </p>

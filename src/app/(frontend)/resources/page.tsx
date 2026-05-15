@@ -51,7 +51,7 @@ export default async function ResourcesPage() {
                 We are building out our library of guides and planning tools. In the meantime,
                 start with a planning call.
               </p>
-              <Link href="/book-a-call" className="btn-primary">
+              <Link href="/book-a-call" className="btn-primary" data-ga-cta="resources_empty_book_call">
                 Book a planning call →
               </Link>
             </div>

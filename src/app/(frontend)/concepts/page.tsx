@@ -108,7 +108,7 @@ export default async function ConceptsPage({ searchParams }: { searchParams: Pro
               <p className="text-sm text-ink-500 mb-6">
                 We add new concepts regularly. Or, tell us what you are looking for.
               </p>
-              <Link href="/book-a-call" className="btn-primary">
+              <Link href="/book-a-call" className="btn-primary" data-ga-cta="concepts_no_results_book_call">
                 Talk to us about your idea →
               </Link>
             </div>
@@ -123,6 +123,7 @@ export default async function ConceptsPage({ searchParams }: { searchParams: Pro
                     key={c.id}
                     name={c.name}
                     slug={c.slug}
+                    gaCta={`concepts_list_${c.slug}`}
                     categoryName={cat}
                     startupCostMin={c.startupCostMin}
                     startupCostMax={c.startupCostMax}

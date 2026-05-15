@@ -47,10 +47,10 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
           ) : null}
 
           <div className="mt-12 pt-8 border-t border-ink-200 flex flex-wrap gap-4">
-            <Link href="/resources" className="btn-ghost text-ink-500">
+            <Link href="/resources" className="btn-ghost text-ink-500" data-ga-cta="resource_detail_resources_back">
               ← Back to Resources
             </Link>
-            <Link href="/book-a-call" className="btn-primary">
+            <Link href="/book-a-call" className="btn-primary" data-ga-cta="resource_detail_book_call">
               Book a planning call →
             </Link>
           </div>

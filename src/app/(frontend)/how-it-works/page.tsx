@@ -96,7 +96,7 @@ export default function HowItWorksPage() {
                 Responsiveness during the research period — we may need a few clarifications
               </li>
             </ul>
-            <Link href="/book-a-call" className="btn-primary">
+            <Link href="/book-a-call" className="btn-primary" data-ga-cta="how_it_works_book_call">
               Start with a planning call →
             </Link>
           </div>

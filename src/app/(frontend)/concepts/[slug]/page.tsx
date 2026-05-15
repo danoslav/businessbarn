@@ -218,10 +218,18 @@ export default async function ConceptDetailPage({ params }: { params: Promise<{ 
                 {c.royaltyTerms && <Stat label="Royalty terms" value={c.royaltyTerms} />}
 
                 <div className="border-t border-ink-100 pt-4 space-y-3">
-                  <Link href="/book-a-call" className="btn-primary w-full justify-center">
+                  <Link
+                    href="/book-a-call"
+                    className="btn-primary w-full justify-center"
+                    data-ga-cta="concept_detail_book_call"
+                  >
                     Enquire about this concept
                   </Link>
-                  <Link href="/concepts" className="btn-ghost text-ink-500 text-xs justify-center w-full">
+                  <Link
+                    href="/concepts"
+                    className="btn-ghost text-ink-500 text-xs justify-center w-full"
+                    data-ga-cta="concept_detail_browse_back"
+                  >
                     ← Browse all concepts
                   </Link>
                 </div>

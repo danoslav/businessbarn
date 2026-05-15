@@ -49,12 +49,13 @@ export default async function HomePage() {
               businesses.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/consulting" className="btn-primary">
+              <Link href="/consulting" className="btn-primary" data-ga-cta="home_hero_consulting">
                 Explore planning packages
               </Link>
               <Link
                 href="/concepts"
                 className="inline-flex items-center px-6 py-3 border border-white/30 text-white hover:bg-white/10 font-semibold text-sm rounded transition-colors duration-150"
+                data-ga-cta="home_hero_concepts"
               >
                 Browse business concepts
               </Link>
@@ -80,7 +81,7 @@ export default async function HomePage() {
                 demand, costs, competition, location, digital, founder fit, and risk — and give you
                 a clear plan with real numbers attached.
               </p>
-              <Link href="/consulting" className="btn-primary text-sm py-2">
+              <Link href="/consulting" className="btn-primary text-sm py-2" data-ga-cta="home_two_ways_packages">
                 See all packages →
               </Link>
             </div>
@@ -96,7 +97,7 @@ export default async function HomePage() {
                 concepts. Each one comes with startup cost ranges, revenue models, territory fit,
                 and a clear picture of what it takes to operate.
               </p>
-              <Link href="/concepts" className="btn-secondary text-sm py-2">
+              <Link href="/concepts" className="btn-secondary text-sm py-2" data-ga-cta="home_two_ways_concepts">
                 Browse concepts →
               </Link>
             </div>
@@ -128,7 +129,7 @@ export default async function HomePage() {
             ))}
           </div>
           <div className="mt-8">
-            <Link href="/how-it-works" className="btn-ghost text-ink-300 hover:text-white">
+            <Link href="/how-it-works" className="btn-ghost text-ink-300 hover:text-white" data-ga-cta="home_founders_how_it_works">
               How we answer them →
             </Link>
           </div>
@@ -148,7 +149,7 @@ export default async function HomePage() {
                   Choose the depth that fits your decision
                 </h2>
               </div>
-              <Link href="/consulting" className="btn-ghost text-ink-600">
+              <Link href="/consulting" className="btn-ghost text-ink-600" data-ga-cta="home_packages_compare_link">
                 Compare all packages →
               </Link>
             </div>
@@ -178,7 +179,11 @@ export default async function HomePage() {
             <div className="mt-8 text-center">
               <p className="text-sm text-ink-400">
                 Not sure which fits?{' '}
-                <Link href="/book-a-call" className="text-barn-600 underline hover:text-barn-800">
+                <Link
+                  href="/book-a-call"
+                  className="text-barn-600 underline hover:text-barn-800"
+                  data-ga-cta="home_packages_fit_call"
+                >
                   Book a free 20-minute fit call →
                 </Link>
               </p>
@@ -200,7 +205,7 @@ export default async function HomePage() {
                   Start from something already researched
                 </h2>
               </div>
-              <Link href="/concepts" className="btn-ghost text-ink-600">
+              <Link href="/concepts" className="btn-ghost text-ink-600" data-ga-cta="home_concepts_browse_all">
                 Browse all concepts →
               </Link>
             </div>
@@ -213,6 +218,7 @@ export default async function HomePage() {
                     key={c.id}
                     name={c.name}
                     slug={c.slug}
+                    gaCta={`home_featured_concept_${c.slug}`}
                     categoryName={cat}
                     startupCostMin={c.startupCostMin}
                     startupCostMax={c.startupCostMax}
@@ -248,7 +254,7 @@ export default async function HomePage() {
           </div>
           <MethodologySteps />
           <div className="mt-10">
-            <Link href="/methodology" className="btn-secondary">
+            <Link href="/methodology" className="btn-secondary" data-ga-cta="home_methodology_read">
               Read our methodology →
             </Link>
           </div>
@@ -266,6 +272,7 @@ export default async function HomePage() {
           <Link
             href="/book-a-call"
             className="inline-flex items-center px-8 py-4 bg-white text-barn-700 font-semibold text-sm rounded hover:bg-harvest-100 transition-colors duration-150"
+            data-ga-cta="home_final_book_call"
           >
             Book a planning call →
           </Link>

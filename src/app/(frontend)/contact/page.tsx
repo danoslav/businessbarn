@@ -32,7 +32,7 @@ export default function ContactPage() {
               Tell us about your idea and we will arrange a free 20-minute fit call within one
               business day.
             </p>
-            <Link href="/book-a-call" className="btn-primary">
+            <Link href="/book-a-call" className="btn-primary" data-ga-cta="contact_book_call_form">
               Fill in the planning call form →
             </Link>
           </div>

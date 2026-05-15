@@ -1,6 +1,12 @@
 import Link from 'next/link'
 
-type CTA = { label: string; href: string; variant?: 'primary' | 'secondary' | 'outline-white' }
+type CTA = {
+  label: string
+  href: string
+  variant?: 'primary' | 'secondary' | 'outline-white'
+  /** `data-ga-cta` for CtaClickListener */
+  gaCta?: string
+}
 
 type Props = {
   eyebrow?: string
@@ -33,7 +39,7 @@ export default function HeroPanel({ eyebrow, heading, body, ctas = [], dark = tr
             <div className="flex flex-wrap gap-4">
               {ctas.map((cta) => (
                 <Link
-                  key={cta.href}
+                  key={cta.href + cta.label}
                   href={cta.href}
                   className={
                     cta.variant === 'outline-white'
@@ -42,6 +48,7 @@ export default function HeroPanel({ eyebrow, heading, body, ctas = [], dark = tr
                       ? 'btn-secondary'
                       : 'btn-primary'
                   }
+                  {...(cta.gaCta ? { 'data-ga-cta': cta.gaCta } : {})}
                 >
                   {cta.label}
                 </Link>

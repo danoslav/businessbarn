@@ -1,7 +1,8 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
 import { submitLead, type LeadState } from '@/lib/actions'
+import { gtagEvent } from '@/lib/gtag'
 
 type Props = {
   leadType?: 'consulting' | 'concept' | 'general'
@@ -25,6 +26,19 @@ export default function LeadForm({
   subheading = "Tell us what you're working on and we'll get back to you within one business day.",
 }: Props) {
   const [state, action, pending] = useActionState(submitLead, INITIAL)
+
+  useEffect(() => {
+    if (state.status !== 'success') return
+    if (typeof window === 'undefined') return
+    const page_path = `${window.location.pathname}${window.location.search}`
+    gtagEvent('generate_lead', {
+      lead_type: leadType,
+      ...(packageSlug ? { package_slug: packageSlug } : {}),
+      ...(conceptSlug ? { concept_slug: conceptSlug } : {}),
+      page_path,
+      page_location: window.location.href,
+    })
+  }, [state.status, leadType, packageSlug, conceptSlug])
 
   if (state.status === 'success') {
     return (
@@ -130,7 +144,12 @@ export default function LeadForm({
           </label>
         </Field>
 
-        <button type="submit" disabled={pending} className="btn-primary w-full justify-center">
+        <button
+          type="submit"
+          disabled={pending}
+          className="btn-primary w-full justify-center"
+          data-ga-cta="lead_form_submit"
+        >
           {pending ? 'Sending…' : 'Send my enquiry'}
         </button>
       </form>
