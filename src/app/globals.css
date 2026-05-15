@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-cream text-ink-900 font-sans;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-700
+           text-white font-sans font-semibold text-sm rounded transition-colors duration-150;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border border-forest-900
+           text-forest-900 hover:bg-forest-50 font-sans font-semibold text-sm rounded
+           transition-colors duration-150;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 text-sm font-semibold text-forest-900
+           hover:text-forest-800 underline underline-offset-2 transition-colors duration-150;
+  }
+
+  .site-container {
+    @apply max-w-site mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-16 lg:py-24;
+  }
+
+  .label-pill {
+    @apply inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wide rounded-full;
+  }
+
+  .card {
+    @apply bg-white border border-ink-200 rounded-lg overflow-hidden;
+  }
+}
