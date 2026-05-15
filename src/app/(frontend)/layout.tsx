@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import { Fraunces, Inter, IBM_Plex_Mono } from 'next/font/google'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
+import GoogleAnalyticsHead from '@/components/analytics/GoogleAnalyticsHead'
 import GtagPageView from '@/components/analytics/GtagPageView'
 import CtaClickListener from '@/components/analytics/CtaClickListener'
 import { getSiteUrl } from '@/lib/site'
@@ -86,9 +86,9 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
+        <GoogleAnalyticsHead />
       </head>
       <body className="min-h-screen flex flex-col">
-        <GoogleAnalytics />
         <Suspense fallback={null}>
           <GtagPageView />
         </Suspense>
