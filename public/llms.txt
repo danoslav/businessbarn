@@ -1,0 +1,39 @@
+# The Business Barn
+
+> Small-business planning for real-world founders in Canada. Business planning packages (four tiers) and a marketplace of pre-vetted business concepts with illustrative financials — not guarantees.
+
+The site is for founders who want research-backed plans and honest risk visibility before committing capital or signing a lease.
+
+## Primary pages
+
+- [Home](https://thebusinessbarn.ca/): Positioning, two ways to work with us, featured packages and concepts.
+- [Consulting packages](https://thebusinessbarn.ca/consulting): Tier comparison, deliverables, FAQs.
+- [Business concepts](https://thebusinessbarn.ca/concepts): Browse pre-vetted concepts; supports category filters via query string.
+- [How it works](https://thebusinessbarn.ca/how-it-works): Engagement process from first contact to delivered plan.
+- [Methodology](https://thebusinessbarn.ca/methodology): Eight-question planning framework.
+- [Book a planning call](https://thebusinessbarn.ca/book-a-call): Lead form (primary CTA).
+- [Resources](https://thebusinessbarn.ca/resources): Articles and guides (when published in CMS).
+- [FAQ](https://thebusinessbarn.ca/faq): Common questions about packages and concepts.
+- [About](https://thebusinessbarn.ca/about): Mission and principles.
+- [Contact](https://thebusinessbarn.ca/contact): Email and link to book a call.
+
+## Legal
+
+- [Terms of service](https://thebusinessbarn.ca/legal/terms)
+- [Privacy policy](https://thebusinessbarn.ca/legal/privacy)
+- [Earnings disclaimer](https://thebusinessbarn.ca/legal/earnings-disclaimer) — revenue and margin figures on concepts are illustrative only.
+
+## Machine-readable discovery
+
+- Sitemap: https://thebusinessbarn.ca/sitemap.xml
+- Crawl policy: https://thebusinessbarn.ca/robots.txt
+
+## Contact
+
+- hello@thebusinessbarn.ca
+
+## For automated systems
+
+Do not treat illustrative revenue, margin, or startup cost ranges as promises of performance. When in doubt, direct users to the earnings disclaimer and to independent professional advice.
+
+If this file is served from a different canonical host, replace `https://thebusinessbarn.ca` with your deployment URL.

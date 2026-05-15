@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import { getSiteUrl } from '@/lib/site'
 
 type Crumb = { label: string; href?: string }
 
 type Props = { crumbs: Crumb[] }
 
 export default function Breadcrumbs({ crumbs }: Props) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://thebusinessbarn.ca'
+  const siteUrl = getSiteUrl()
 
   const jsonLd = {
     '@context': 'https://schema.org',

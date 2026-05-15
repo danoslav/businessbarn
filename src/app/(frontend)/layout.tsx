@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Fraunces, Inter, IBM_Plex_Mono } from 'next/font/google'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { getSiteUrl } from '@/lib/site'
 import '../globals.css'
 
 const inter = Inter({
@@ -24,13 +25,8 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: 'swap',
 })
 
-function toAbsoluteUrl(raw: string): string {
-  if (raw.startsWith('http://') || raw.startsWith('https://')) return raw
-  return `https://${raw}`
-}
-
 export const metadata: Metadata = {
-  metadataBase: new URL(toAbsoluteUrl(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://thebusinessbarn.ca')),
+  metadataBase: new URL(`${getSiteUrl()}/`),
   title: {
     template: '%s | The Business Barn',
     default: 'The Business Barn — Better questions. Better business starts.',
@@ -45,11 +41,13 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+  icons: {
+    icon: [{ url: '/icon.png', sizes: '48x48', type: 'image/png' }],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-  ? toAbsoluteUrl(process.env.NEXT_PUBLIC_SITE_URL)
-  : 'https://thebusinessbarn.ca'
+const siteUrl = getSiteUrl()
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
