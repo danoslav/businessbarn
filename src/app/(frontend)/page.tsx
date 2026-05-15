@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getListings, getConcepts } from '@/lib/payload'
+
+export const dynamic = 'force-dynamic'
 import ListingCard from '@/components/ListingCard'
 import ConceptCard from '@/components/ConceptCard'
 

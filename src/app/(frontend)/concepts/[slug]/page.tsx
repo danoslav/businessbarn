@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getConceptBySlug, getConcepts, formatPriceRange } from '@/lib/payload'
+
+export const dynamic = 'force-dynamic'
 import DisclaimerBlock from '@/components/DisclaimerBlock'
 import LeadForm from '@/components/LeadForm'
 import ConceptCard from '@/components/ConceptCard'

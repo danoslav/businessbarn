@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPosts } from '@/lib/payload'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Business Buying & Selling Advice | Blog',
   description:

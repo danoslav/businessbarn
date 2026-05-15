@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { getConcepts } from '@/lib/payload'
 import ConceptCard from '@/components/ConceptCard'
 
+export const dynamic = 'force-dynamic'
+
 type SearchParams = Promise<{ category?: string; territory?: string; page?: string }>
 
 export async function generateMetadata({

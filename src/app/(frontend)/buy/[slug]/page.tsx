@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getListingBySlug, formatPrice } from '@/lib/payload'
+
+export const dynamic = 'force-dynamic'
 import LeadForm from '@/components/LeadForm'
 
 type Props = { params: Promise<{ slug: string }> }
