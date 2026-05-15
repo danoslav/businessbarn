@@ -16,8 +16,13 @@ const lora = Lora({
   display: 'swap',
 })
 
+function toAbsoluteUrl(raw: string): string {
+  if (raw.startsWith('http://') || raw.startsWith('https://')) return raw
+  return `https://${raw}`
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://businessbarn.ca'),
+  metadataBase: new URL(toAbsoluteUrl(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://businessbarn.ca')),
   title: {
     template: '%s | BusinessBARN',
     default: 'BusinessBARN — Buy, Sell & Start Businesses in B.C.',
