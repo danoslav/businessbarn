@@ -1,177 +1,142 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getConcepts } from '@/lib/payload'
 import ConceptCard from '@/components/ConceptCard'
+import DisclaimerBlock from '@/components/DisclaimerBlock'
+import { getConcepts, getCategories, getLocations } from '@/lib/payload'
 
 export const dynamic = 'force-dynamic'
 
-type SearchParams = Promise<{ category?: string; territory?: string; page?: string }>
+type SearchParams = { category?: string; location?: string }
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: SearchParams
-}): Promise<Metadata> {
-  const { category, territory } = await searchParams
-
-  const catLabel = category
-    ? category
-        .split('-')
-        .map((w) => w[0].toUpperCase() + w.slice(1))
-        .join(' ')
-    : null
-  const locLabel = territory
-    ? territory
-        .split('-')
-        .map((w) => w[0].toUpperCase() + w.slice(1))
-        .join(' ')
-    : null
-
-  const titleParts = ['Business Concepts Available in B.C.']
-  if (catLabel && locLabel) titleParts[0] = `${catLabel} Concepts in ${locLabel}, B.C.`
-  else if (catLabel) titleParts[0] = `${catLabel} Business Concepts in B.C.`
-  else if (locLabel) titleParts[0] = `Business Concepts in ${locLabel}, B.C.`
-
+function buildMetadata(cat?: string, loc?: string): Metadata {
+  if (cat && loc) {
+    return {
+      title: `${cat} Business Concepts in ${loc} | The Business Barn`,
+      description: `Browse pre-vetted ${cat} business concepts suited to ${loc}. Real startup costs, revenue models, and territory availability.`,
+    }
+  }
+  if (cat) {
+    return {
+      title: `${cat} Business Concepts | The Business Barn`,
+      description: `Pre-vetted ${cat} business concepts with startup costs, revenue models, and operator fit guidance.`,
+    }
+  }
+  if (loc) {
+    return {
+      title: `Business Concepts in ${loc} | The Business Barn`,
+      description: `Browse pre-vetted business concepts suited to ${loc}. Startup costs, revenue models, and territory availability.`,
+    }
+  }
   return {
-    title: titleParts[0],
-    description: `Explore proven business concepts with territory availability in B.C. ${catLabel ? `Browse ${catLabel} concepts.` : ''} Startup costs, revenue assumptions, and founder fit for each opportunity.`,
+    title: 'Business Concepts | The Business Barn',
+    description:
+      'Browse our marketplace of pre-vetted business concepts. Each includes real startup cost ranges, revenue models, territory availability, and operator fit guidance.',
   }
 }
 
-const CATEGORIES = [
-  { value: '', label: 'All' },
-  { value: 'home-services', label: 'Home Services' },
-  { value: 'outdoor-services', label: 'Outdoor Services' },
-  { value: 'automotive', label: 'Automotive' },
-  { value: 'facility-services', label: 'Facility Services' },
-  { value: 'pet-services', label: 'Pet Services' },
-  { value: 'events', label: 'Events' },
-  { value: 'professional-services', label: 'Professional Services' },
-  { value: 'health-wellness', label: 'Health & Wellness' },
-  { value: 'food-beverage', label: 'Food & Beverage' },
-]
+export async function generateMetadata({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
+  const sp = await searchParams
+  return buildMetadata(sp.category, sp.location)
+}
 
-export default async function ConceptsPage({ searchParams }: { searchParams: SearchParams }) {
-  const { category, page: pageParam } = await searchParams
-  const page = Math.max(1, Number(pageParam ?? 1))
+export default async function ConceptsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const sp = await searchParams
+  const [concepts, categories, locations] = await Promise.all([
+    getConcepts({ category: sp.category, location: sp.location }).catch(() => []),
+    getCategories().catch(() => []),
+    getLocations().catch(() => []),
+  ])
 
-  const result = await getConcepts({ category, page, limit: 12 })
-  const concepts = result.docs
+  const pageHeading =
+    sp.category && sp.location
+      ? `${sp.category} concepts in ${sp.location}`
+      : sp.category
+      ? `${sp.category} business concepts`
+      : sp.location
+      ? `Business concepts in ${sp.location}`
+      : 'Business concepts'
 
   return (
     <>
-      {/* Header */}
-      <section className="bg-forest-950 text-white py-14">
+      <section className="bg-ink-900 text-white py-12 lg:py-16">
         <div className="site-container">
-          <p className="text-terra-400 text-xs font-semibold uppercase tracking-widest mb-2">
-            Side Two
+          <p className="text-xs font-semibold uppercase tracking-widest text-harvest-400 mb-3">
+            Pre-vetted business concepts
           </p>
-          <h1 className="font-serif text-4xl font-bold mb-2">Business Concepts</h1>
-          <p className="text-ink-300 max-w-xl">
-            Proven operating models with territory availability in B.C. Startup cost, revenue
-            assumptions, and everything you need to evaluate each opportunity.
+          <h1 className="font-serif text-4xl font-bold mb-3">{pageHeading}</h1>
+          <p className="text-base text-ink-300 max-w-xl">
+            Each concept has been modelled for startup cost, revenue potential, operator fit,
+            and local market demand. These are starting points — not guarantees.
           </p>
         </div>
       </section>
 
-      {/* Important notice */}
-      <div className="bg-amber-50 border-b border-amber-200">
-        <div className="site-container py-3 text-xs text-amber-800">
-          Revenue figures are illustrative estimates only — not a guarantee of earnings. These
-          listings are not franchise offerings.{' '}
-          <Link href="/terms" className="underline hover:text-amber-900">
-            Learn more
-          </Link>
-        </div>
-      </div>
-
-      {/* Filters */}
-      <section className="bg-white border-b border-ink-200">
-        <div className="site-container py-4 flex flex-wrap gap-2">
-          {CATEGORIES.map(({ value, label }) => (
+      <section className="bg-cream py-10 border-b border-ink-100">
+        <div className="site-container">
+          <div className="flex flex-wrap gap-3 items-center">
+            <span className="text-xs font-semibold text-ink-500 uppercase tracking-wide">Filter by category:</span>
             <Link
-              key={value}
-              href={value ? `/concepts?category=${value}` : '/concepts'}
-              className={`px-4 py-1.5 text-sm rounded-full border transition-colors duration-150 ${
-                category === value || (!category && !value)
-                  ? 'bg-terra-700 text-white border-terra-700'
-                  : 'border-ink-200 text-ink-600 hover:border-terra-600 hover:text-terra-700'
-              }`}
+              href="/concepts"
+              className={`label-pill border text-[11px] ${!sp.category ? 'bg-barn-600 text-white border-barn-600' : 'bg-white text-ink-600 border-ink-200 hover:border-barn-400'}`}
             >
-              {label}
+              All
             </Link>
-          ))}
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/concepts?category=${cat.slug}${sp.location ? `&location=${sp.location}` : ''}`}
+                className={`label-pill border text-[11px] ${sp.category === cat.slug ? 'bg-barn-600 text-white border-barn-600' : 'bg-white text-ink-600 border-ink-200 hover:border-barn-400'}`}
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Grid */}
-      <section className="section bg-cream">
+      <section className="bg-cream py-10 lg:py-14">
         <div className="site-container">
-          {concepts.length > 0 ? (
-            <>
-              <p className="text-sm text-ink-500 mb-6">
-                {result.totalDocs} concept{result.totalDocs !== 1 ? 's' : ''} available
-              </p>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {concepts.map((c) => (
-                  <ConceptCard
-                    key={String(c.id)}
-                    name={c.name}
-                    slug={c.slug}
-                    category={c.category}
-                    startupCostMin={c.startupCostMin}
-                    startupCostMax={c.startupCostMax}
-                    revenueMin={c.revenueMin ?? undefined}
-                    revenueMax={c.revenueMax ?? undefined}
-                    territoryStatus={c.territoryStatus as 'available' | 'limited' | 'sold'}
-                    shortDescription={c.shortDescription}
-                    complexity={c.complexity}
-                  />
-                ))}
-              </div>
-              {result.totalPages > 1 && (
-                <div className="flex justify-center gap-2 mt-12">
-                  {Array.from({ length: result.totalPages }, (_, i) => i + 1).map((p) => (
-                    <Link
-                      key={p}
-                      href={`/concepts?${category ? `category=${category}&` : ''}page=${p}`}
-                      className={`w-9 h-9 flex items-center justify-center text-sm rounded border transition-colors ${
-                        p === page
-                          ? 'bg-terra-700 text-white border-terra-700'
-                          : 'border-ink-200 text-ink-600 hover:border-terra-600'
-                      }`}
-                    >
-                      {p}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </>
-          ) : (
+          <div className="mb-6">
+            <DisclaimerBlock short />
+          </div>
+
+          {concepts.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-ink-500 mb-4">No concepts found. Check back soon.</p>
-              <Link href="/concepts" className="btn-secondary">
-                Clear filters
+              <p className="font-serif text-xl text-ink-700 mb-2">
+                No concepts match this filter yet.
+              </p>
+              <p className="text-sm text-ink-500 mb-6">
+                We add new concepts regularly. Or, tell us what you are looking for.
+              </p>
+              <Link href="/book-a-call" className="btn-primary">
+                Talk to us about your idea →
               </Link>
             </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {concepts.map((c) => {
+                const cat = typeof c.category === 'object' && c.category
+                  ? (c.category as { name: string }).name
+                  : undefined
+                return (
+                  <ConceptCard
+                    key={c.id}
+                    name={c.name}
+                    slug={c.slug}
+                    categoryName={cat}
+                    startupCostMin={c.startupCostMin}
+                    startupCostMax={c.startupCostMax}
+                    estimatedMonthlyRevenueMin={c.estimatedMonthlyRevenueMin ?? undefined}
+                    estimatedMonthlyRevenueMax={c.estimatedMonthlyRevenueMax ?? undefined}
+                    launchTimeline={c.launchTimeline ?? undefined}
+                    difficultyLevel={c.difficultyLevel ?? undefined}
+                    territoryStatus={c.territoryStatus as 'available' | 'limited' | 'sold'}
+                    shortDescription={c.shortDescription}
+                  />
+                )
+              })}
+            </div>
           )}
-        </div>
-      </section>
-
-      {/* Briefing CTA */}
-      <section className="py-16 bg-terra-800 text-white text-center">
-        <div className="site-container max-w-md mx-auto">
-          <h2 className="font-serif text-2xl font-bold mb-2">Not sure which concept fits you?</h2>
-          <p className="text-terra-200 text-sm mb-6">
-            Request a no-pressure briefing and we&apos;ll walk you through the options best suited
-            to your goals, budget, and location.
-          </p>
-          <Link
-            href="/request-briefing"
-            className="inline-flex items-center px-8 py-4 bg-white text-terra-800 font-semibold rounded hover:bg-terra-50 transition-colors"
-          >
-            Request a Concept Briefing
-          </Link>
         </div>
       </section>
     </>

@@ -4,94 +4,91 @@ import { formatPriceRange } from '@/lib/payload'
 type Props = {
   name: string
   slug: string
-  category: string
+  categoryName?: string
   startupCostMin: number
   startupCostMax: number
-  revenueMin?: number
-  revenueMax?: number
+  estimatedMonthlyRevenueMin?: number
+  estimatedMonthlyRevenueMax?: number
+  launchTimeline?: string
+  difficultyLevel?: string
   territoryStatus: 'available' | 'limited' | 'sold'
   shortDescription: string
-  complexity: string
-}
-
-const CATEGORY_LABELS: Record<string, string> = {
-  automotive: 'Automotive',
-  'facility-services': 'Facility Services',
-  'home-services': 'Home Services',
-  'outdoor-services': 'Outdoor Services',
-  'pet-services': 'Pet Services',
-  events: 'Events',
-  'professional-services': 'Professional Services',
-  'health-wellness': 'Health & Wellness',
-  'food-beverage': 'Food & Beverage',
-  technology: 'Technology',
 }
 
 const TERRITORY_BADGE: Record<string, { label: string; className: string }> = {
-  available: { label: 'Available', className: 'bg-forest-50 text-forest-800' },
-  limited: { label: 'Limited', className: 'bg-amber-50 text-amber-700' },
+  available: { label: 'Territories Available', className: 'bg-field-50 text-field-600' },
+  limited: { label: 'Limited Availability', className: 'bg-harvest-100 text-harvest-700' },
   sold: { label: 'Sold Out', className: 'bg-ink-100 text-ink-500' },
 }
 
 export default function ConceptCard({
   name,
   slug,
-  category,
+  categoryName,
   startupCostMin,
   startupCostMax,
-  revenueMin,
-  revenueMax,
+  estimatedMonthlyRevenueMin,
+  estimatedMonthlyRevenueMax,
+  launchTimeline,
+  difficultyLevel,
   territoryStatus,
   shortDescription,
-  complexity,
 }: Props) {
   const badge = TERRITORY_BADGE[territoryStatus] ?? TERRITORY_BADGE.available
 
   return (
     <Link
       href={`/concepts/${slug}`}
-      className="card block hover:border-terra-600 transition-colors duration-150 group"
+      className="card flex flex-col hover:border-barn-400 transition-colors duration-150 group"
     >
-      {/* Accent bar */}
-      <div className="h-1 bg-terra-600" />
+      {/* Category bar */}
+      <div className="h-1 bg-barn-600" />
 
-      <div className="p-5">
+      <div className="p-5 flex flex-col flex-1">
         <div className="flex items-center justify-between mb-3">
-          <span className="label-pill bg-terra-50 text-terra-700 text-[10px]">
-            {CATEGORY_LABELS[category] ?? category}
-          </span>
+          {categoryName && (
+            <span className="label-pill bg-cream text-barn-700 border border-barn-200 text-[10px]">
+              {categoryName}
+            </span>
+          )}
           <span className={`label-pill text-[10px] ${badge.className}`}>{badge.label}</span>
         </div>
 
-        <h3 className="font-serif font-semibold text-ink-900 mb-2 group-hover:text-terra-700 transition-colors">
+        <h3 className="font-serif font-semibold text-ink-900 mb-2 group-hover:text-barn-700 transition-colors">
           {name}
         </h3>
 
-        <p className="text-sm text-ink-500 line-clamp-2 mb-4">{shortDescription}</p>
+        <p className="text-sm text-ink-500 line-clamp-2 mb-4 flex-1">{shortDescription}</p>
 
-        <div className="grid grid-cols-2 gap-3 pt-3 border-t border-ink-100">
+        <div className="grid grid-cols-2 gap-3 pt-3 border-t border-ink-100 text-[11px]">
           <div>
-            <p className="text-[10px] text-ink-400 uppercase tracking-wide mb-0.5">Startup cost</p>
-            <p className="text-sm font-semibold text-ink-800">
+            <p className="text-ink-400 uppercase tracking-wide mb-0.5">Startup cost</p>
+            <p className="font-semibold text-ink-800">
               {formatPriceRange(startupCostMin, startupCostMax)}
             </p>
           </div>
-          {revenueMin && revenueMax && (
+          {estimatedMonthlyRevenueMin && estimatedMonthlyRevenueMax && (
             <div>
-              <p className="text-[10px] text-ink-400 uppercase tracking-wide mb-0.5">
-                Revenue <span className="normal-case">(illus.)</span>
+              <p className="text-ink-400 uppercase tracking-wide mb-0.5">
+                Monthly rev. <span className="normal-case font-normal">(illus.)</span>
               </p>
-              <p className="text-sm font-semibold text-ink-800">
-                {formatPriceRange(revenueMin, revenueMax)}/yr
+              <p className="font-semibold text-ink-800">
+                {formatPriceRange(estimatedMonthlyRevenueMin, estimatedMonthlyRevenueMax)}/mo
               </p>
             </div>
           )}
-          <div>
-            <p className="text-[10px] text-ink-400 uppercase tracking-wide mb-0.5">Complexity</p>
-            <p className="text-sm font-medium text-ink-700 capitalize">
-              {complexity.replace('-', '\u2013')}
-            </p>
-          </div>
+          {launchTimeline && (
+            <div>
+              <p className="text-ink-400 uppercase tracking-wide mb-0.5">Launch</p>
+              <p className="font-semibold text-ink-800">{launchTimeline}</p>
+            </div>
+          )}
+          {difficultyLevel && (
+            <div>
+              <p className="text-ink-400 uppercase tracking-wide mb-0.5">Difficulty</p>
+              <p className="font-semibold text-ink-800 capitalize">{difficultyLevel}</p>
+            </div>
+          )}
         </div>
       </div>
     </Link>

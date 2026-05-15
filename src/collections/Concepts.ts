@@ -4,8 +4,8 @@ export const Concepts: CollectionConfig = {
   slug: 'concepts',
   admin: {
     useAsTitle: 'name',
-    group: 'Side Two',
-    defaultColumns: ['name', 'category', 'startupCostMin', 'territoryStatus', 'status'],
+    group: 'Concepts',
+    defaultColumns: ['name', 'category', 'difficultyLevel', 'territoryStatus', 'status'],
   },
   access: {
     read: () => true,
@@ -15,12 +15,18 @@ export const Concepts: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+      admin: { description: 'Public concept name, e.g. "Porchlight Pet Pantry"' },
     },
     {
       name: 'slug',
       type: 'text',
       required: true,
       unique: true,
+    },
+    {
+      name: 'placeholderBrand',
+      type: 'text',
+      admin: { description: 'Working brand name used in concept materials' },
     },
     {
       name: 'status',
@@ -35,20 +41,15 @@ export const Concepts: CollectionConfig = {
     },
     {
       name: 'category',
-      type: 'select',
+      type: 'relationship',
+      relationTo: 'categories',
       required: true,
-      options: [
-        { label: 'Automotive', value: 'automotive' },
-        { label: 'Facility Services', value: 'facility-services' },
-        { label: 'Home Services', value: 'home-services' },
-        { label: 'Outdoor Services', value: 'outdoor-services' },
-        { label: 'Pet Services', value: 'pet-services' },
-        { label: 'Events', value: 'events' },
-        { label: 'Professional Services', value: 'professional-services' },
-        { label: 'Health & Wellness', value: 'health-wellness' },
-        { label: 'Food & Beverage', value: 'food-beverage' },
-        { label: 'Technology', value: 'technology' },
-      ],
+    },
+    {
+      name: 'businessType',
+      type: 'text',
+      required: true,
+      admin: { description: 'e.g. "Neighbourhood premium pet food and essentials shop"' },
     },
     {
       name: 'territoryStatus',
@@ -62,12 +63,18 @@ export const Concepts: CollectionConfig = {
       ],
     },
     {
-      name: 'territories',
+      name: 'locations',
       type: 'relationship',
-      relationTo: 'territories',
+      relationTo: 'locations',
       hasMany: true,
     },
-    // Cost & revenue (illustrative only)
+    {
+      name: 'idealLocations',
+      type: 'textarea',
+      required: true,
+      admin: { description: 'Plain-language description of ideal trade areas and location types' },
+    },
+    // Financials (illustrative only — never a guarantee)
     {
       name: 'startupCostMin',
       type: 'number',
@@ -81,27 +88,47 @@ export const Concepts: CollectionConfig = {
       admin: { description: 'Maximum startup cost in CAD' },
     },
     {
-      name: 'revenueMin',
+      name: 'estimatedMonthlyRevenueMin',
       type: 'number',
-      admin: { description: 'Illustrative minimum annual revenue in CAD — NOT a guarantee' },
+      admin: { description: 'Illustrative minimum monthly revenue after ramp-up — NOT a guarantee' },
     },
     {
-      name: 'revenueMax',
+      name: 'estimatedMonthlyRevenueMax',
       type: 'number',
-      admin: { description: 'Illustrative maximum annual revenue in CAD — NOT a guarantee' },
+      admin: { description: 'Illustrative maximum monthly revenue after ramp-up — NOT a guarantee' },
     },
     {
-      name: 'complexity',
+      name: 'grossMarginMin',
+      type: 'number',
+      admin: { description: 'Illustrative gross margin % (low end)' },
+    },
+    {
+      name: 'grossMarginMax',
+      type: 'number',
+      admin: { description: 'Illustrative gross margin % (high end)' },
+    },
+    {
+      name: 'launchTimeline',
+      type: 'text',
+      required: true,
+      admin: { description: 'e.g. "8–14 weeks"' },
+    },
+    {
+      name: 'royaltyTerms',
+      type: 'text',
+      admin: { description: 'e.g. "16% monthly royalty on defined revenue base, subject to final agreement"' },
+    },
+    {
+      name: 'difficultyLevel',
       type: 'select',
       required: true,
       options: [
         { label: 'Low', value: 'low' },
-        { label: 'Low–Medium', value: 'low-medium' },
         { label: 'Medium', value: 'medium' },
-        { label: 'Medium–High', value: 'medium-high' },
         { label: 'High', value: 'high' },
       ],
     },
+    // Content
     {
       name: 'shortDescription',
       type: 'textarea',
@@ -109,28 +136,44 @@ export const Concepts: CollectionConfig = {
       admin: { description: 'Used in concept cards — keep under 160 characters' },
     },
     {
+      name: 'customerProfile',
+      type: 'textarea',
+      admin: { description: 'Target customer description' },
+    },
+    {
+      name: 'revenueModel',
+      type: 'textarea',
+      admin: { description: 'How the business makes money' },
+    },
+    {
       name: 'description',
       type: 'richText',
       required: true,
-      admin: { description: 'Full concept description — "What is this?"' },
+      admin: { description: 'Full concept overview — "What is this concept?"' },
     },
     {
-      name: 'whatsIncluded',
+      name: 'startupRequirements',
       type: 'array',
-      label: "What's Included",
+      admin: { description: 'What the operator needs to get started' },
+      fields: [{ name: 'item', type: 'text', required: true }],
+    },
+    {
+      name: 'includedMaterials',
+      type: 'array',
+      label: 'Included Materials',
       fields: [{ name: 'item', type: 'text', required: true }],
     },
     {
       name: 'founderFit',
       type: 'array',
-      label: 'Founder Fit',
-      admin: { description: 'Who is this concept suited for?' },
+      label: 'Operator Fit',
+      admin: { description: 'Skills and traits this concept suits' },
       fields: [{ name: 'trait', type: 'text', required: true }],
     },
     {
       name: 'risks',
       type: 'array',
-      admin: { description: 'Known risks and open questions — be honest' },
+      admin: { description: 'Honest risks and assumptions to watch' },
       fields: [{ name: 'risk', type: 'text', required: true }],
     },
     {
@@ -142,7 +185,7 @@ export const Concepts: CollectionConfig = {
       name: 'featured',
       type: 'checkbox',
       defaultValue: false,
-      admin: { description: 'Show on homepage featured row' },
+      admin: { description: 'Show in homepage featured concepts row' },
     },
   ],
 }

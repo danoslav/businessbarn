@@ -5,11 +5,14 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { Categories } from './collections/Categories'
+import { CRMActivities } from './collections/CRMActivities'
 import { Concepts } from './collections/Concepts'
+import { ConsultingPackages } from './collections/ConsultingPackages'
 import { Leads } from './collections/Leads'
-import { Listings } from './collections/Listings'
+import { Locations } from './collections/Locations'
 import { Media } from './collections/Media'
-import { Posts } from './collections/Posts'
+import { Resources } from './collections/Resources'
 import { Territories } from './collections/Territories'
 import { Users } from './collections/Users'
 
@@ -23,10 +26,26 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     meta: {
-      titleSuffix: '— BusinessBARN Admin',
+      titleSuffix: '— The Business Barn Admin',
     },
   },
-  collections: [Listings, Concepts, Leads, Posts, Media, Territories, Users],
+  collections: [
+    // Consulting
+    ConsultingPackages,
+    // Concepts marketplace
+    Concepts,
+    Categories,
+    Locations,
+    Territories,
+    // CRM
+    Leads,
+    CRMActivities,
+    // Content
+    Resources,
+    Media,
+    // System
+    Users,
+  ],
   editor: lexicalEditor(),
   db: postgresAdapter({
     pool: {

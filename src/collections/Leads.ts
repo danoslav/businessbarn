@@ -5,9 +5,8 @@ export const Leads: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'CRM',
-    defaultColumns: ['name', 'email', 'packageInterest', 'stage', 'followUpDate', 'createdAt'],
+    defaultColumns: ['name', 'email', 'leadType', 'stage', 'followUpDate', 'createdAt'],
   },
-  // Leads are write-only for public; read/update restricted to admins
   access: {
     create: () => true,
     read: ({ req }) => Boolean(req.user),
@@ -18,9 +17,8 @@ export const Leads: CollectionConfig = {
     afterChange: [
       async ({ doc, operation }) => {
         if (operation !== 'create') return
-        // Log to console — wire up a transactional email service (Resend, Postmark, etc.) here
         console.log(
-          `[BusinessBARN] New lead: ${doc.name} <${doc.email}> — ${doc.packageInterest}`,
+          `[The Business Barn] New lead: ${doc.name} <${doc.email}> — ${doc.leadType}`,
         )
       },
     ],
@@ -41,39 +39,90 @@ export const Leads: CollectionConfig = {
       type: 'text',
     },
     {
-      name: 'packageInterest',
+      name: 'city',
+      type: 'text',
+      admin: { description: 'City or region they noted' },
+    },
+    {
+      name: 'leadType',
       type: 'select',
       required: true,
       options: [
-        { label: 'Side One — Buy a Business', value: 'side-one' },
-        { label: 'Side Two — Business Concept', value: 'side-two' },
-        { label: 'Side One — Sell My Business', value: 'sell' },
-        { label: 'Both', value: 'both' },
+        { label: 'Consulting Package', value: 'consulting' },
+        { label: 'Business Concept', value: 'concept' },
         { label: 'General Enquiry', value: 'general' },
       ],
+    },
+    {
+      name: 'packageInterest',
+      type: 'relationship',
+      relationTo: 'consulting-packages',
+      admin: { description: 'Which consulting package they enquired about' },
     },
     {
       name: 'conceptInterest',
       type: 'relationship',
       relationTo: 'concepts',
-      admin: { description: 'Which concept did they enquire about?' },
+      admin: { description: 'Which business concept they enquired about' },
     },
     {
-      name: 'listingInterest',
-      type: 'relationship',
-      relationTo: 'listings',
-      admin: { description: 'Which listing did they enquire about?' },
-    },
-    {
-      name: 'territory',
+      name: 'categoryParam',
       type: 'text',
-      admin: { description: 'City or region they noted' },
+      admin: { description: 'Category slug from URL when they submitted (for unmet demand tracking)' },
+    },
+    {
+      name: 'locationParam',
+      type: 'text',
+      admin: { description: 'Location slug from URL when they submitted' },
+    },
+    {
+      name: 'businessType',
+      type: 'text',
+      admin: { description: 'Type of business they are considering' },
+    },
+    {
+      name: 'hasLocation',
+      type: 'select',
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' },
+        { label: 'Considering options', value: 'considering' },
+      ],
+    },
+    {
+      name: 'startupBudget',
+      type: 'select',
+      options: [
+        { label: 'Under $10,000', value: 'under-10k' },
+        { label: '$10,000–$30,000', value: '10k-30k' },
+        { label: '$30,000–$75,000', value: '30k-75k' },
+        { label: '$75,000–$150,000', value: '75k-150k' },
+        { label: '$150,000+', value: '150k-plus' },
+        { label: 'Not sure yet', value: 'unsure' },
+      ],
+    },
+    {
+      name: 'launchTimeline',
+      type: 'select',
+      options: [
+        { label: 'As soon as possible', value: 'asap' },
+        { label: '1–3 months', value: '1-3mo' },
+        { label: '3–6 months', value: '3-6mo' },
+        { label: '6–12 months', value: '6-12mo' },
+        { label: 'Just exploring', value: 'exploring' },
+      ],
     },
     {
       name: 'message',
       type: 'textarea',
-      admin: { description: 'Their message from the form' },
+      admin: { description: 'What decision they are trying to make next' },
     },
+    {
+      name: 'consentTimestamp',
+      type: 'date',
+      admin: { description: 'When they gave consent to be contacted' },
+    },
+    // CRM
     {
       name: 'stage',
       type: 'select',
@@ -81,36 +130,18 @@ export const Leads: CollectionConfig = {
       required: true,
       options: [
         { label: 'New', value: 'new' },
-        { label: 'Contacted', value: 'contacted' },
-        { label: 'Qualified', value: 'qualified' },
-        { label: 'Proposal', value: 'proposal' },
-        { label: 'Closed', value: 'closed' },
+        { label: 'Reviewed', value: 'reviewed' },
+        { label: 'Fit Call Booked', value: 'fit-call-booked' },
+        { label: 'Proposal Sent', value: 'proposal-sent' },
+        { label: 'Won', value: 'won' },
         { label: 'Lost', value: 'lost' },
+        { label: 'Nurture', value: 'nurture' },
       ],
-    },
-    {
-      name: 'source',
-      type: 'select',
-      options: [
-        { label: 'Organic', value: 'organic' },
-        { label: 'Paid', value: 'paid' },
-        { label: 'Referral', value: 'referral' },
-        { label: 'Direct', value: 'direct' },
-        { label: 'Unknown', value: 'unknown' },
-      ],
-    },
-    {
-      name: 'sourceURL',
-      type: 'text',
-      admin: { description: 'Page the form was submitted from (auto-filled)' },
     },
     {
       name: 'followUpDate',
       type: 'date',
-      admin: {
-        date: { pickerAppearance: 'dayOnly' },
-        description: 'Next scheduled follow-up',
-      },
+      admin: { date: { pickerAppearance: 'dayOnly' } },
     },
     {
       name: 'notes',
@@ -122,8 +153,24 @@ export const Leads: CollectionConfig = {
       type: 'textarea',
       admin: {
         condition: (data) => data.stage === 'lost',
-        description: 'Why did this lead not proceed?',
       },
+    },
+    // Attribution
+    {
+      name: 'sourceURL',
+      type: 'text',
+    },
+    {
+      name: 'utmSource',
+      type: 'text',
+    },
+    {
+      name: 'utmMedium',
+      type: 'text',
+    },
+    {
+      name: 'utmCampaign',
+      type: 'text',
     },
   ],
 }

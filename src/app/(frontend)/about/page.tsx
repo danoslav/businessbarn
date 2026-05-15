@@ -1,62 +1,95 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'About BusinessBARN',
+  title: 'About | The Business Barn',
   description:
-    'BusinessBARN is a B.C.-focused business marketplace and brokerage helping buyers, sellers, and new operators find the right opportunity.',
+    'The Business Barn is a small-business planning practice built for founders who want honest analysis before they commit.',
 }
 
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-forest-950 text-white py-14">
-        <div className="site-container max-w-2xl">
-          <h1 className="font-serif text-4xl font-bold mb-4">About BusinessBARN</h1>
-          <p className="text-ink-300 text-lg leading-relaxed">
-            We&apos;re a B.C.-based business marketplace and brokerage built for buyers, sellers,
-            and new operators who want to do things properly.
+      <section className="bg-ink-900 text-white py-12 lg:py-16">
+        <div className="site-container">
+          <Breadcrumbs crumbs={[{ label: 'About' }]} />
+          <p className="text-xs font-semibold uppercase tracking-widest text-harvest-400 mb-3">
+            Our story
+          </p>
+          <h1 className="font-serif text-4xl font-bold mb-3">About The Business Barn</h1>
+          <p className="text-base text-ink-300 max-w-xl">
+            A small-business planning practice built for founders who want real answers before
+            they sign a lease, order inventory, or quit their job.
           </p>
         </div>
       </section>
 
-      <section className="section bg-cream">
-        <div className="site-container max-w-3xl">
-          <div className="space-y-8 text-ink-700 leading-relaxed">
-            <div>
-              <h2 className="font-serif text-2xl font-bold text-ink-900 mb-3">What We Do</h2>
-              <p>
-                BusinessBARN operates on two sides. On <strong>Side One</strong>, we help business
-                owners sell their businesses confidentially and connect qualified buyers with
-                established, verified listings across British Columbia.
-              </p>
-              <p className="mt-3">
-                On <strong>Side Two</strong>, we curate business concepts — proven operating models
-                with territory availability in B.C. — for people who want to start something
-                structured and supported, without building from scratch.
-              </p>
-            </div>
+      <section className="bg-cream py-14 lg:py-20">
+        <div className="site-container max-w-3xl space-y-10">
+          <div>
+            <h2 className="font-serif text-2xl font-bold text-ink-900 mb-4">Why we exist</h2>
+            <p className="text-sm text-ink-600 leading-relaxed mb-4">
+              Most small business failures are predictable. They happen because someone committed
+              capital, time, and emotional energy to an idea without ever rigorously asking whether
+              the demand is real, whether the numbers work, or whether they are the right person
+              to run it.
+            </p>
+            <p className="text-sm text-ink-600 leading-relaxed mb-4">
+              That is not a failure of ambition — it is a failure of the planning process most
+              founders have access to. Business plan templates ask you to fill in a market size
+              number. Advisors give vague encouragement. Online courses sell the dream of
+              entrepreneurship without stress-testing the conditions for success.
+            </p>
+            <p className="text-sm text-ink-600 leading-relaxed">
+              The Business Barn exists to offer something different: honest, structured,
+              research-based planning that surfaces the hard questions before you pay for them.
+            </p>
+          </div>
 
-            <div>
-              <h2 className="font-serif text-2xl font-bold text-ink-900 mb-3">Our Approach</h2>
-              <p>
-                We believe the best transactions happen when both sides have the right information.
-                We don&apos;t hype listings. We don&apos;t oversell concepts. We give buyers and
-                sellers an honest picture of what they&apos;re getting into — and we stay involved
-                until the deal closes.
-              </p>
-            </div>
+          <div>
+            <h2 className="font-serif text-2xl font-bold text-ink-900 mb-4">What we believe</h2>
+            <ul className="space-y-4">
+              {[
+                {
+                  lead: 'The best business plan is honest.',
+                  body: 'A plan that inflates your addressable market or ignores a dominant competitor is not a plan — it is a wish list. We document what needs to be true for the business to work.',
+                },
+                {
+                  lead: 'Real founders deserve real numbers.',
+                  body: 'Not hockey-stick projections. Not broad industry statistics. Real local demand signals, real competitor names, real cost assumptions tied to real inputs.',
+                },
+                {
+                  lead: 'A good plan can say no.',
+                  body: 'If the concept does not hold up under scrutiny, we will say so — clearly, specifically, and with reasoning. That is part of the value.',
+                },
+                {
+                  lead: 'The decision is always yours.',
+                  body: 'We give you the clearest picture we can build. What you do with it is entirely your call. We are not here to manage your business — we are here to help you decide whether to start it.',
+                },
+              ].map(({ lead, body }) => (
+                <li key={lead} className="text-sm text-ink-600 leading-relaxed">
+                  <strong className="font-semibold text-ink-900">{lead}</strong> {body}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <div>
-              <h2 className="font-serif text-2xl font-bold text-ink-900 mb-3">Get in Touch</h2>
-              <p>
-                Whether you&apos;re buying, selling, or just exploring, we&apos;re happy to talk.
-                No pressure, no pitch.
-              </p>
-              <div className="flex gap-4 mt-4">
-                <Link href="/contact" className="btn-primary">Contact Us</Link>
-                <Link href="/valuation" className="btn-secondary">Free Valuation</Link>
-              </div>
+          <div className="bg-white border border-ink-200 rounded-lg p-7">
+            <h2 className="font-serif text-xl font-bold text-ink-900 mb-3">
+              Ready to start?
+            </h2>
+            <p className="text-sm text-ink-600 leading-relaxed mb-5">
+              The first step is a free 20-minute planning call. No pitch, no pressure — just
+              honest questions to find out if we are the right fit for what you are building.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/book-a-call" className="btn-primary">
+                Book a planning call →
+              </Link>
+              <Link href="/consulting" className="btn-secondary">
+                See our packages
+              </Link>
             </div>
           </div>
         </div>

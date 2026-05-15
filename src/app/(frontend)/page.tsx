@@ -1,245 +1,274 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getListings, getConcepts } from '@/lib/payload'
+import ConceptCard from '@/components/ConceptCard'
+import PackageCard from '@/components/PackageCard'
+import MethodologySteps from '@/components/MethodologySteps'
+import DisclaimerBlock from '@/components/DisclaimerBlock'
+import { getConcepts, getConsultingPackages } from '@/lib/payload'
 
 export const dynamic = 'force-dynamic'
-import ListingCard from '@/components/ListingCard'
-import ConceptCard from '@/components/ConceptCard'
 
 export const metadata: Metadata = {
-  title: 'BusinessBARN — Buy, Sell & Start Businesses in B.C.',
+  title: 'Better questions. Better business starts. | The Business Barn',
   description:
-    "Browse businesses for sale or explore proven business concepts available in B.C. Get a free valuation, find qualified buyers, or launch something new.",
-  openGraph: {
-    title: 'BusinessBARN — Buy, Sell & Start Businesses in B.C.',
-    description:
-      "Browse businesses for sale or explore proven business concepts available in B.C.",
-  },
+    'Practical business planning packages and pre-vetted business concepts for founders who want real numbers before they commit.',
 }
 
-const HOW_IT_WORKS = [
-  {
-    step: '01',
-    title: 'Tell us what you want',
-    body: 'Browse our listings or explore our curated business concepts. Request a briefing or a free valuation — no commitment required.',
-  },
-  {
-    step: '02',
-    title: 'We do the groundwork',
-    body: 'Our team qualifies both buyers and sellers, prepares packages, and matches the right people to the right opportunity.',
-  },
-  {
-    step: '03',
-    title: 'Close with confidence',
-    body: 'We guide you through due diligence, negotiation, and transition so you can sign with clarity.',
-  },
+const FOUNDER_QUESTIONS = [
+  'Is there real demand for this where I live?',
+  'What does it actually cost to open and run?',
+  'Who am I really competing against?',
+  'Can I make money in year one?',
+  'Does this fit how I want to work?',
+  'What would make this fail?',
 ]
 
 export default async function HomePage() {
-  const [listingsResult, conceptsResult] = await Promise.all([
-    getListings({ limit: 3 }),
-    getConcepts({ featured: true, limit: 3 }),
+  const [packages, concepts] = await Promise.all([
+    getConsultingPackages().catch(() => []),
+    getConcepts({ featuredOnly: true, limit: 3 }).catch(() => []),
   ])
-
-  const listings = listingsResult.docs
-  const concepts = conceptsResult.docs
 
   return (
     <>
-      {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="bg-forest-950 text-white py-24 lg:py-36">
+      {/* Hero */}
+      <section className="bg-ink-900 text-white py-16 lg:py-24">
         <div className="site-container">
           <div className="max-w-3xl">
-            <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-4">
-              British Columbia&apos;s Business Marketplace
+            <p className="text-xs font-semibold uppercase tracking-widest text-harvest-400 mb-4">
+              Small-business planning for real-world founders
             </p>
             <h1 className="font-serif text-4xl lg:text-6xl font-bold leading-tight mb-6">
-              Buy, Sell, or Start a Business in B.C.
+              Better questions.
+              <br />
+              <span className="text-barn-400">Better business starts.</span>
             </h1>
-            <p className="text-ink-300 text-lg lg:text-xl leading-relaxed mb-10 max-w-xl">
-              Whether you&apos;re ready to exit, looking for your next venture, or exploring a
-              proven business concept — BusinessBARN connects you to the right opportunity.
+            <p className="text-lg text-ink-300 leading-relaxed mb-8 max-w-xl">
+              We work with founders who want the honest picture before they commit — not glossy
+              templates, not vague advice, not hockey-stick projections. Real planning for real
+              businesses.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/buy" className="btn-primary px-8 py-4 text-base">
-                Browse Listings
+              <Link href="/consulting" className="btn-primary">
+                Explore planning packages
               </Link>
               <Link
                 href="/concepts"
-                className="inline-flex items-center gap-2 px-8 py-4 border border-white/30 text-white hover:bg-white/10 font-semibold text-base rounded transition-colors duration-150"
+                className="inline-flex items-center px-6 py-3 border border-white/30 text-white hover:bg-white/10 font-semibold text-sm rounded transition-colors duration-150"
               >
-                Explore Concepts
+                Browse business concepts
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Trust strip ───────────────────────────────────────────────────── */}
-      <section className="bg-forest-900 text-white py-6">
+      {/* Two ways to start */}
+      <section className="bg-cream py-14 lg:py-20 border-b border-ink-100">
         <div className="site-container">
-          <div className="flex flex-wrap justify-center gap-8 lg:gap-16 text-center">
-            {[
-              { value: '50+', label: 'Active Listings' },
-              { value: '10+', label: 'Business Concepts' },
-              { value: 'B.C.-Wide', label: 'Territory Coverage' },
-              { value: 'Free', label: 'Valuation Assessment' },
-            ].map(({ value, label }) => (
-              <div key={label}>
-                <p className="font-serif text-2xl font-bold text-amber-400">{value}</p>
-                <p className="text-xs text-ink-300 uppercase tracking-widest mt-1">{label}</p>
+          <h2 className="font-serif text-2xl font-bold text-ink-900 mb-8">Two ways to work with us</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white border border-ink-200 rounded-lg p-7">
+              <div className="inline-block label-pill bg-barn-50 text-barn-700 border border-barn-200 mb-4 text-[10px]">
+                Get a plan
+              </div>
+              <h3 className="font-serif text-xl font-bold text-ink-900 mb-2">
+                Business planning packages
+              </h3>
+              <p className="text-sm text-ink-600 leading-relaxed mb-4">
+                You bring the idea. We run it through eight layers of pressure-testing — market
+                demand, costs, competition, location, digital, founder fit, and risk — and give you
+                a clear plan with real numbers attached.
+              </p>
+              <Link href="/consulting" className="btn-primary text-sm py-2">
+                See all packages →
+              </Link>
+            </div>
+            <div className="bg-white border border-ink-200 rounded-lg p-7">
+              <div className="inline-block label-pill bg-field-50 text-field-600 border border-field-200 mb-4 text-[10px]">
+                Start from a concept
+              </div>
+              <h3 className="font-serif text-xl font-bold text-ink-900 mb-2">
+                Pre-vetted business concepts
+              </h3>
+              <p className="text-sm text-ink-600 leading-relaxed mb-4">
+                Not sure what to build? Browse our marketplace of researched, modelled business
+                concepts. Each one comes with startup cost ranges, revenue models, territory fit,
+                and a clear picture of what it takes to operate.
+              </p>
+              <Link href="/concepts" className="btn-secondary text-sm py-2">
+                Browse concepts →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder questions block */}
+      <section className="bg-field-950 text-white py-14 lg:py-20">
+        <div className="site-container">
+          <div className="max-w-xl mb-10">
+            <p className="text-xs font-semibold uppercase tracking-widest text-harvest-400 mb-3">
+              The questions that actually matter
+            </p>
+            <h2 className="font-serif text-2xl font-bold leading-snug">
+              Most planning focuses on the pitch. We focus on the questions that kill businesses
+              before they open.
+            </h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {FOUNDER_QUESTIONS.map((q, i) => (
+              <div
+                key={i}
+                className="border border-white/10 rounded-lg px-5 py-4 text-sm text-ink-300 leading-relaxed"
+              >
+                <span className="font-serif text-harvest-400 font-semibold">{i + 1}. </span>
+                {q}
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── Featured listings ─────────────────────────────────────────────── */}
-      <section className="section bg-cream">
-        <div className="site-container">
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-forest-700 mb-1">
-                Side One
-              </p>
-              <h2 className="font-serif text-3xl font-bold text-ink-900">
-                Businesses for Sale
-              </h2>
-            </div>
-            <Link href="/buy" className="btn-ghost hidden sm:flex">
-              View all listings →
-            </Link>
-          </div>
-
-          {listings.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {listings.map((l) => (
-                <ListingCard
-                  key={String(l.id)}
-                  title={l.title}
-                  slug={l.slug}
-                  category={l.category}
-                  location={l.location}
-                  askingPrice={l.askingPrice}
-                  annualRevenue={l.annualRevenue ?? undefined}
-                  shortDescription={l.shortDescription}
-                  confidential={l.confidential ?? false}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-lg border border-ink-200 bg-white p-12 text-center">
-              <p className="text-ink-500">Listings coming soon. Check back shortly.</p>
-            </div>
-          )}
-
-          <div className="mt-6 sm:hidden text-center">
-            <Link href="/buy" className="btn-ghost">
-              View all listings →
+          <div className="mt-8">
+            <Link href="/how-it-works" className="btn-ghost text-ink-300 hover:text-white">
+              How we answer them →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ── Featured concepts ─────────────────────────────────────────────── */}
-      <section className="section bg-white">
-        <div className="site-container">
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-terra-700 mb-1">
-                Side Two
-              </p>
-              <h2 className="font-serif text-3xl font-bold text-ink-900">
-                Business Concepts
-              </h2>
-              <p className="text-ink-500 mt-1 text-sm">
-                Proven models with territory availability in B.C.
-              </p>
-            </div>
-            <Link href="/concepts" className="btn-ghost hidden sm:flex">
-              All concepts →
-            </Link>
-          </div>
-
-          {concepts.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {concepts.map((c) => (
-                <ConceptCard
-                  key={String(c.id)}
-                  name={c.name}
-                  slug={c.slug}
-                  category={c.category}
-                  startupCostMin={c.startupCostMin}
-                  startupCostMax={c.startupCostMax}
-                  revenueMin={c.revenueMin ?? undefined}
-                  revenueMax={c.revenueMax ?? undefined}
-                  territoryStatus={c.territoryStatus as 'available' | 'limited' | 'sold'}
-                  shortDescription={c.shortDescription}
-                  complexity={c.complexity}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-lg border border-ink-200 p-12 text-center">
-              <p className="text-ink-500">Concepts launching soon — request early access.</p>
-              <Link href="/request-briefing" className="btn-primary mt-4 inline-flex">
-                Request a Briefing
+      {/* Package cards */}
+      {packages.length > 0 && (
+        <section className="bg-cream py-14 lg:py-20">
+          <div className="site-container">
+            <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-barn-600 mb-1">
+                  Planning packages
+                </p>
+                <h2 className="font-serif text-2xl font-bold text-ink-900">
+                  Choose the depth that fits your decision
+                </h2>
+              </div>
+              <Link href="/consulting" className="btn-ghost text-ink-600">
+                Compare all packages →
               </Link>
             </div>
-          )}
-
-          <div className="mt-6 sm:hidden text-center">
-            <Link href="/concepts" className="btn-ghost">
-              All concepts →
-            </Link>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {packages.map((pkg, i) => (
+                <PackageCard
+                  key={pkg.id}
+                  name={pkg.name}
+                  slug={pkg.slug}
+                  tagline={pkg.tagline ?? undefined}
+                  bestFor={
+                    Array.isArray(pkg.bestFor)
+                      ? pkg.bestFor.map((b: { item: string }) => b.item)
+                      : []
+                  }
+                  deliverables={
+                    Array.isArray(pkg.deliverables)
+                      ? pkg.deliverables.map((d: { item: string }) => d.item)
+                      : []
+                  }
+                  priceLabel={pkg.priceLabel ?? undefined}
+                  ctaLabel={pkg.ctaLabel ?? undefined}
+                  highlighted={i === 2}
+                />
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <p className="text-sm text-ink-400">
+                Not sure which fits?{' '}
+                <Link href="/book-a-call" className="text-barn-600 underline hover:text-barn-800">
+                  Book a free 20-minute fit call →
+                </Link>
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* ── How it works ──────────────────────────────────────────────────── */}
-      <section id="how-it-works" className="section bg-ink-50">
+      {/* Featured concepts */}
+      {concepts.length > 0 && (
+        <section className="bg-white py-14 lg:py-20 border-t border-ink-100">
+          <div className="site-container">
+            <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-field-600 mb-1">
+                  Business concepts
+                </p>
+                <h2 className="font-serif text-2xl font-bold text-ink-900">
+                  Start from something already researched
+                </h2>
+              </div>
+              <Link href="/concepts" className="btn-ghost text-ink-600">
+                Browse all concepts →
+              </Link>
+            </div>
+            <DisclaimerBlock short />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+              {concepts.map((c) => {
+                const cat = typeof c.category === 'object' && c.category ? (c.category as { name: string }).name : undefined
+                return (
+                  <ConceptCard
+                    key={c.id}
+                    name={c.name}
+                    slug={c.slug}
+                    categoryName={cat}
+                    startupCostMin={c.startupCostMin}
+                    startupCostMax={c.startupCostMax}
+                    estimatedMonthlyRevenueMin={c.estimatedMonthlyRevenueMin ?? undefined}
+                    estimatedMonthlyRevenueMax={c.estimatedMonthlyRevenueMax ?? undefined}
+                    launchTimeline={c.launchTimeline ?? undefined}
+                    difficultyLevel={c.difficultyLevel ?? undefined}
+                    territoryStatus={c.territoryStatus as 'available' | 'limited' | 'sold'}
+                    shortDescription={c.shortDescription}
+                  />
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Methodology preview */}
+      <section className="bg-cream py-14 lg:py-20 border-t border-ink-100">
         <div className="site-container">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl font-bold text-ink-900">How It Works</h2>
-            <p className="text-ink-500 mt-2 max-w-lg mx-auto">
-              We guide buyers, sellers, and new operators from first conversation to signed deal.
+          <div className="max-w-2xl mb-12">
+            <p className="text-xs font-semibold uppercase tracking-widest text-barn-600 mb-2">
+              Our approach
+            </p>
+            <h2 className="font-serif text-2xl font-bold text-ink-900 mb-3">
+              Eight questions every serious founder needs answered
+            </h2>
+            <p className="text-sm text-ink-600 leading-relaxed">
+              Our planning methodology is built around the conditions most likely to make a
+              small business succeed or fail. Every package and every concept runs through
+              the same eight-layer framework.
             </p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-8">
-            {HOW_IT_WORKS.map(({ step, title, body }) => (
-              <div key={step} className="text-center">
-                <p className="font-serif text-4xl font-bold text-amber-500 mb-3">{step}</p>
-                <h3 className="font-serif text-lg font-semibold text-ink-900 mb-2">{title}</h3>
-                <p className="text-sm text-ink-500 leading-relaxed">{body}</p>
-              </div>
-            ))}
+          <MethodologySteps />
+          <div className="mt-10">
+            <Link href="/methodology" className="btn-secondary">
+              Read our methodology →
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ── CTA band ──────────────────────────────────────────────────────── */}
-      <section className="py-16 bg-amber-600">
+      {/* Final CTA */}
+      <section className="bg-barn-600 text-white py-14 lg:py-20">
         <div className="site-container text-center">
-          <h2 className="font-serif text-3xl font-bold text-white mb-3">
-            Ready to make a move?
-          </h2>
-          <p className="text-amber-100 text-lg mb-8 max-w-md mx-auto">
-            Free valuation for sellers. No-pressure briefings for buyers and concept operators.
+          <h2 className="font-serif text-3xl font-bold mb-4">Bring your idea to the Barn</h2>
+          <p className="text-base text-barn-100 max-w-lg mx-auto mb-8">
+            Whether you have a rough concept or a near-ready plan, the next step is a
+            20-minute planning call. No pitch. Just honest questions.
           </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link
-              href="/valuation"
-              className="inline-flex items-center px-8 py-4 bg-white text-amber-700 font-semibold rounded hover:bg-amber-50 transition-colors duration-150"
-            >
-              Get a Free Valuation
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center px-8 py-4 border border-white/50 text-white font-semibold rounded hover:bg-white/10 transition-colors duration-150"
-            >
-              Talk to Us
-            </Link>
-          </div>
+          <Link
+            href="/book-a-call"
+            className="inline-flex items-center px-8 py-4 bg-white text-barn-700 font-semibold text-sm rounded hover:bg-harvest-100 transition-colors duration-150"
+          >
+            Book a planning call →
+          </Link>
         </div>
       </section>
     </>

@@ -1,59 +1,53 @@
 import type { Metadata } from 'next'
-import LeadForm from '@/components/LeadForm'
+import Link from 'next/link'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'Contact BusinessBARN',
+  title: 'Contact | The Business Barn',
   description:
-    'Get in touch with the BusinessBARN team. Questions about buying, selling, or business concepts — we\'re happy to help.',
+    'Get in touch with The Business Barn. For most enquiries, booking a planning call is the fastest way to get started.',
 }
 
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-forest-950 text-white py-14">
-        <div className="site-container max-w-xl">
-          <h1 className="font-serif text-4xl font-bold mb-3">Get in Touch</h1>
-          <p className="text-ink-300 leading-relaxed">
-            Questions about a listing, a concept, or just want to talk through your options? We
-            respond to every enquiry within one business day.
+      <section className="bg-ink-900 text-white py-12">
+        <div className="site-container">
+          <Breadcrumbs crumbs={[{ label: 'Contact' }]} />
+          <h1 className="font-serif text-3xl font-bold mb-3">Get in touch</h1>
+          <p className="text-base text-ink-300 max-w-xl">
+            For most enquiries, the fastest route is to book a planning call. For everything
+            else, email us directly.
           </p>
         </div>
       </section>
 
-      <section className="section bg-cream">
-        <div className="site-container">
-          <div className="grid lg:grid-cols-2 gap-16 max-w-4xl mx-auto">
-            <div>
-              <h2 className="font-serif text-2xl font-semibold text-ink-900 mb-6">
-                How can we help?
-              </h2>
-              <div className="space-y-4">
-                {[
-                  { label: 'Buying a business', desc: 'Browse our listings or tell us what you\'re looking for.' },
-                  { label: 'Selling your business', desc: 'Get a free valuation and learn about the process.' },
-                  { label: 'Business concepts', desc: 'Explore what\'s available and request a no-pressure briefing.' },
-                  { label: 'General enquiry', desc: 'Anything else — just say hello.' },
-                ].map(({ label, desc }) => (
-                  <div key={label} className="card p-4">
-                    <p className="font-semibold text-ink-800 text-sm">{label}</p>
-                    <p className="text-sm text-ink-500 mt-0.5">{desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+      <section className="bg-cream py-14">
+        <div className="site-container max-w-2xl space-y-8">
+          <div className="card p-8">
+            <h2 className="font-serif text-xl font-bold text-ink-900 mb-2">
+              Book a planning call
+            </h2>
+            <p className="text-sm text-ink-600 leading-relaxed mb-5">
+              Tell us about your idea and we will arrange a free 20-minute fit call within one
+              business day.
+            </p>
+            <Link href="/book-a-call" className="btn-primary">
+              Fill in the planning call form →
+            </Link>
+          </div>
 
-            <div className="card p-6">
-              <h2 className="font-serif text-lg font-semibold text-ink-900 mb-4">
-                Send a Message
-              </h2>
-              <LeadForm
-                packageInterest="general"
-                sourceURL="/contact"
-                showTerritory
-                showMessage
-                ctaLabel="Send Message"
-              />
-            </div>
+          <div className="card p-8">
+            <h2 className="font-serif text-xl font-bold text-ink-900 mb-2">Email us</h2>
+            <p className="text-sm text-ink-600 leading-relaxed mb-5">
+              For partnership enquiries, media, or anything else:
+            </p>
+            <a
+              href="mailto:hello@thebusinessbarn.ca"
+              className="text-barn-600 font-semibold hover:underline"
+            >
+              hello@thebusinessbarn.ca
+            </a>
           </div>
         </div>
       </section>

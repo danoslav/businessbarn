@@ -5,55 +5,93 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Primary — dark forest green (trust, stability, B.C.)
-        forest: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d',
-          950: '#0a1f14',
+        // Primary — Barn Red (CTAs, key accents)
+        barn: {
+          50: '#fdf2ef',
+          100: '#fbe0d9',
+          200: '#f6bdb0',
+          400: '#de7258',
+          500: '#d45e42',
+          600: '#C94A2E',
+          700: '#a83b23',
+          800: '#8a2f1c',
+          900: '#6e2515',
         },
-        // CTA — harvest amber (opportunity, action)
-        amber: {
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-          700: '#b45309',
+        // Harvest Yellow (highlights, badges, warmth)
+        harvest: {
+          100: '#fef8e3',
+          200: '#fdf0c0',
+          300: '#fbe491',
+          400: '#F6C85F',
+          500: '#f2b535',
+          600: '#d99a1e',
+          700: '#b37d16',
         },
-        // Side Two accent — terracotta (distinct from Side One)
-        terra: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          400: '#fb923c',
-          600: '#ea580c',
-          700: '#c2410c',
-          800: '#9a3412',
-          900: '#7c2d12',
+        // Field Green (trust, grounding sections)
+        field: {
+          50: '#f0f7f4',
+          100: '#daeee5',
+          200: '#b4dccb',
+          400: '#5fa688',
+          600: '#2F6B4F',
+          700: '#285c43',
+          800: '#204b36',
+          900: '#183a29',
+          950: '#0e2418',
         },
-        // Neutrals
+        // Clay (secondary accent)
+        clay: {
+          200: '#efd4c0',
+          400: '#cc9574',
+          600: '#B86F46',
+          700: '#9a5c37',
+        },
+        // Ink (text hierarchy)
         ink: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
+          50: '#f7f8f9',
+          100: '#eef0f2',
+          200: '#d5d9de',
+          300: '#b3bac3',
+          400: '#8d97a3',
+          500: '#6b7685',
+          600: '#546070',
+          700: '#3f4d5c',
+          800: '#2d3a47',
+          900: '#1F2933',
+          950: '#141c23',
         },
-        // Warm page background
-        cream: '#faf8f4',
+        // Page backgrounds
+        cream: '#FFF7E8',
+        // Sky — info panels
+        sky: {
+          50: '#f4f9ff',
+          100: '#E8F2FF',
+          200: '#c8dffe',
+        },
+        // Graphite — borders, muted UI
+        graphite: {
+          400: '#6b7785',
+          500: '#546070',
+          600: '#38414A',
+          700: '#2c333b',
+        },
+        // Sprout — success/positive
+        sprout: {
+          100: '#e8f5d6',
+          400: '#9BCB77',
+          600: '#6aaa41',
+        },
+        // Warning wheat — risk/attention
+        wheat: {
+          100: '#fef3e2',
+          400: '#F2A541',
+          600: '#d4831e',
+        },
       },
       fontFamily: {
         serif: ['var(--font-serif)', 'Georgia', 'serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       maxWidth: {
         site: '1200px',

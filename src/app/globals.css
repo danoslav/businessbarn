@@ -4,7 +4,8 @@
 
 :root {
   --font-sans: 'Inter', system-ui, sans-serif;
-  --font-serif: 'Lora', Georgia, serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
 @layer base {
@@ -22,35 +23,54 @@
 }
 
 @layer components {
+  /* Primary CTA — Barn Red */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-700
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-barn-600 hover:bg-barn-700
            text-white font-sans font-semibold text-sm rounded transition-colors duration-150;
   }
 
+  /* Secondary CTA — Field Green outline */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border border-forest-900
-           text-forest-900 hover:bg-forest-50 font-sans font-semibold text-sm rounded
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border border-field-600
+           text-field-600 hover:bg-field-50 font-sans font-semibold text-sm rounded
            transition-colors duration-150;
   }
 
+  /* Ghost link */
   .btn-ghost {
-    @apply inline-flex items-center gap-2 text-sm font-semibold text-forest-900
-           hover:text-forest-800 underline underline-offset-2 transition-colors duration-150;
+    @apply inline-flex items-center gap-2 text-sm font-semibold text-ink-700
+           hover:text-ink-900 underline underline-offset-2 transition-colors duration-150;
   }
 
+  /* Page wrapper */
   .site-container {
     @apply max-w-site mx-auto px-4 sm:px-6 lg:px-8;
   }
 
+  /* Section padding */
   .section {
     @apply py-16 lg:py-24;
   }
 
+  /* Pill/badge */
   .label-pill {
     @apply inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wide rounded-full;
   }
 
+  /* Card surface */
   .card {
     @apply bg-white border border-ink-200 rounded-lg overflow-hidden;
+  }
+
+  /* Risk/disclaimer notice */
+  .notice-warning {
+    @apply border border-wheat-400 bg-wheat-100 rounded-lg p-5 text-sm text-ink-700 leading-relaxed;
+  }
+
+  /* Form inputs */
+  .input {
+    @apply block w-full rounded border border-ink-300 bg-white px-3 py-2 text-sm text-ink-900
+           placeholder-ink-400 focus:outline-none focus:ring-1 focus:ring-barn-600
+           focus:border-barn-600 transition-colors duration-150;
   }
 }

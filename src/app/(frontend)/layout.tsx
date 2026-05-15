@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Lora, Inter } from 'next/font/google'
+import { Fraunces, Inter, IBM_Plex_Mono } from 'next/font/google'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import '../globals.css'
@@ -10,9 +10,17 @@ const inter = Inter({
   display: 'swap',
 })
 
-const lora = Lora({
+const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-serif',
+  display: 'swap',
+  axes: ['opsz'],
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '500'],
   display: 'swap',
 })
 
@@ -22,15 +30,15 @@ function toAbsoluteUrl(raw: string): string {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(toAbsoluteUrl(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://businessbarn.ca')),
+  metadataBase: new URL(toAbsoluteUrl(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://thebusinessbarn.ca')),
   title: {
-    template: '%s | BusinessBARN',
-    default: 'BusinessBARN — Buy, Sell & Start Businesses in B.C.',
+    template: '%s | The Business Barn',
+    default: 'The Business Barn — Better questions. Better business starts.',
   },
   description:
-    'B.C.\'s marketplace for buying, selling, and starting businesses. Browse listings, explore proven business concepts, and get a free valuation.',
+    'Practical business planning packages and pre-vetted business concepts for founders who want real numbers before they commit.',
   openGraph: {
-    siteName: 'BusinessBARN',
+    siteName: 'The Business Barn',
     type: 'website',
     locale: 'en_CA',
   },
@@ -39,9 +47,44 @@ export const metadata: Metadata = {
   },
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  ? toAbsoluteUrl(process.env.NEXT_PUBLIC_SITE_URL)
+  : 'https://thebusinessbarn.ca'
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'The Business Barn',
+  url: siteUrl,
+  description:
+    'Practical business planning packages and pre-vetted business concepts for founders who want real numbers before they commit.',
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'CA',
+    addressRegion: 'BC',
+  },
+}
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'The Business Barn',
+  url: siteUrl,
+}
+
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${lora.variable}`}>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable} ${ibmPlexMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1">{children}</main>

@@ -1,48 +1,54 @@
 'use server'
 
-import { getPayloadClient } from './payload'
 import { z } from 'zod'
+import { getPayloadClient } from './payload'
+import { headers } from 'next/headers'
 
 const leadSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Valid email required'),
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
   phone: z.string().optional(),
-  packageInterest: z.enum(['side-one', 'side-two', 'sell', 'both', 'general']),
+  city: z.string().optional(),
+  leadType: z.enum(['consulting', 'concept', 'general']).default('general'),
+  packageSlug: z.string().optional(),
   conceptSlug: z.string().optional(),
-  listingSlug: z.string().optional(),
-  territory: z.string().optional(),
+  businessType: z.string().optional(),
+  hasLocation: z.enum(['yes', 'no', 'considering']).optional(),
+  startupBudget: z
+    .enum(['under-10k', '10k-30k', '30k-75k', '75k-150k', '150k-plus', 'unsure'])
+    .optional(),
+  launchTimeline: z
+    .enum(['asap', '1-3mo', '3-6mo', '6-12mo', 'exploring'])
+    .optional(),
   message: z.string().optional(),
+  consent: z.literal('on', {
+    errorMap: () => ({ message: 'You must consent to be contacted' }),
+  }),
   sourceURL: z.string().optional(),
+  utmSource: z.string().optional(),
+  utmMedium: z.string().optional(),
+  utmCampaign: z.string().optional(),
+  categoryParam: z.string().optional(),
+  locationParam: z.string().optional(),
 })
 
-export type LeadFormState = {
-  success: boolean
-  error?: string
-  fieldErrors?: Record<string, string[]>
-}
+export type LeadState =
+  | { status: 'idle' }
+  | { status: 'success' }
+  | { status: 'error'; errors: Record<string, string[]> }
+  | { status: 'serverError'; message: string }
 
 export async function submitLead(
-  prevState: LeadFormState,
+  _prev: LeadState,
   formData: FormData,
-): Promise<LeadFormState> {
-  const raw = {
-    name: formData.get('name'),
-    email: formData.get('email'),
-    phone: formData.get('phone') || undefined,
-    packageInterest: formData.get('packageInterest'),
-    conceptSlug: formData.get('conceptSlug') || undefined,
-    listingSlug: formData.get('listingSlug') || undefined,
-    territory: formData.get('territory') || undefined,
-    message: formData.get('message') || undefined,
-    sourceURL: formData.get('sourceURL') || undefined,
-  }
-
+): Promise<LeadState> {
+  const raw = Object.fromEntries(formData)
   const parsed = leadSchema.safeParse(raw)
+
   if (!parsed.success) {
     return {
-      success: false,
-      error: 'Please fix the errors below.',
-      fieldErrors: parsed.error.flatten().fieldErrors,
+      status: 'error',
+      errors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
     }
   }
 
@@ -51,26 +57,25 @@ export async function submitLead(
   try {
     const payload = await getPayloadClient()
 
-    // Resolve concept and listing relationships by slug
-    let conceptId: string | undefined
-    let listingId: string | undefined
+    // Resolve relationship IDs
+    let packageId: string | undefined
+    if (data.packageSlug) {
+      const pkgResult = await payload.find({
+        collection: 'consulting-packages',
+        where: { slug: { equals: data.packageSlug } },
+        limit: 1,
+      })
+      packageId = pkgResult.docs[0]?.id ? String(pkgResult.docs[0].id) : undefined
+    }
 
+    let conceptId: string | undefined
     if (data.conceptSlug) {
-      const res = await payload.find({
+      const conceptResult = await payload.find({
         collection: 'concepts',
         where: { slug: { equals: data.conceptSlug } },
         limit: 1,
       })
-      if (res.docs[0]) conceptId = String(res.docs[0].id)
-    }
-
-    if (data.listingSlug) {
-      const res = await payload.find({
-        collection: 'listings',
-        where: { slug: { equals: data.listingSlug } },
-        limit: 1,
-      })
-      if (res.docs[0]) listingId = String(res.docs[0].id)
+      conceptId = conceptResult.docs[0]?.id ? String(conceptResult.docs[0].id) : undefined
     }
 
     await payload.create({
@@ -79,20 +84,32 @@ export async function submitLead(
         name: data.name,
         email: data.email,
         phone: data.phone,
-        packageInterest: data.packageInterest,
+        city: data.city,
+        leadType: data.leadType,
+        packageInterest: packageId,
         conceptInterest: conceptId,
-        listingInterest: listingId,
-        territory: data.territory,
+        businessType: data.businessType,
+        hasLocation: data.hasLocation,
+        startupBudget: data.startupBudget,
+        launchTimeline: data.launchTimeline,
         message: data.message,
-        sourceURL: data.sourceURL,
+        consentTimestamp: new Date().toISOString(),
         stage: 'new',
-        source: 'organic',
+        sourceURL: data.sourceURL,
+        utmSource: data.utmSource,
+        utmMedium: data.utmMedium,
+        utmCampaign: data.utmCampaign,
+        categoryParam: data.categoryParam,
+        locationParam: data.locationParam,
       },
     })
 
-    return { success: true }
+    return { status: 'success' }
   } catch (err) {
-    console.error('Lead submission error:', err)
-    return { success: false, error: 'Something went wrong. Please try again or email us directly.' }
+    console.error('[The Business Barn] Lead submission error:', err)
+    return {
+      status: 'serverError',
+      message: 'Something went wrong. Please try again or email us directly.',
+    }
   }
 }

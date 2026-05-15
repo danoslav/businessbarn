@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-export const Posts: CollectionConfig = {
-  slug: 'posts',
+export const Resources: CollectionConfig = {
+  slug: 'resources',
   admin: {
     useAsTitle: 'title',
     group: 'Content',
@@ -35,17 +35,19 @@ export const Posts: CollectionConfig = {
       name: 'category',
       type: 'select',
       options: [
-        { label: 'Buying a Business', value: 'buying' },
-        { label: 'Selling a Business', value: 'selling' },
+        { label: 'Business Planning', value: 'planning' },
+        { label: 'Revenue & Financials', value: 'financials' },
+        { label: 'Location Research', value: 'location' },
+        { label: 'Digital & Marketing', value: 'digital' },
+        { label: 'Funding & Grants', value: 'funding' },
+        { label: 'Founder Mindset', value: 'mindset' },
         { label: 'Business Concepts', value: 'concepts' },
-        { label: 'Market Insights', value: 'insights' },
-        { label: 'Guides', value: 'guides' },
       ],
     },
     {
       name: 'excerpt',
       type: 'textarea',
-      admin: { description: 'Used in post cards and meta description' },
+      admin: { description: 'Used in resource cards and meta description' },
     },
     {
       name: 'content',
@@ -60,7 +62,7 @@ export const Posts: CollectionConfig = {
     {
       name: 'author',
       type: 'text',
-      defaultValue: 'BusinessBARN Team',
+      defaultValue: 'The Business Barn',
     },
     {
       name: 'publishedAt',
@@ -70,6 +72,16 @@ export const Posts: CollectionConfig = {
       name: 'readingTime',
       type: 'number',
       admin: { description: 'Estimated reading time in minutes' },
+    },
+    {
+      name: 'relatedPackage',
+      type: 'relationship',
+      relationTo: 'consulting-packages',
+    },
+    {
+      name: 'relatedCategory',
+      type: 'relationship',
+      relationTo: 'categories',
     },
   ],
 }
