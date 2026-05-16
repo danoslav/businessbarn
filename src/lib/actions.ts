@@ -2,7 +2,6 @@
 
 import { z } from 'zod'
 import { getPayloadClient } from './payload'
-import { headers } from 'next/headers'
 
 const leadSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -32,6 +31,32 @@ const leadSchema = z.object({
   locationParam: z.string().optional(),
 })
 
+/** FormData encodes unset `<select>` as ""; Zod enums reject "". Strip for optional fields only. */
+function stripEmptyOptionalFields(raw: Record<string, string>): Record<string, string> {
+  const optionalKeys = [
+    'phone',
+    'city',
+    'packageSlug',
+    'conceptSlug',
+    'businessType',
+    'hasLocation',
+    'startupBudget',
+    'launchTimeline',
+    'message',
+    'sourceURL',
+    'utmSource',
+    'utmMedium',
+    'utmCampaign',
+    'categoryParam',
+    'locationParam',
+  ] as const
+  const out: Record<string, string> = { ...raw }
+  for (const k of optionalKeys) {
+    if (out[k] === '') delete out[k]
+  }
+  return out
+}
+
 export type LeadState =
   | { status: 'idle' }
   | { status: 'success' }
@@ -42,7 +67,7 @@ export async function submitLead(
   _prev: LeadState,
   formData: FormData,
 ): Promise<LeadState> {
-  const raw = Object.fromEntries(formData)
+  const raw = stripEmptyOptionalFields(Object.fromEntries(formData) as Record<string, string>)
   const parsed = leadSchema.safeParse(raw)
 
   if (!parsed.success) {
@@ -83,30 +108,31 @@ export async function submitLead(
       data: {
         name: data.name,
         email: data.email,
-        phone: data.phone,
-        city: data.city,
+        ...(data.phone ? { phone: data.phone } : {}),
+        ...(data.city ? { city: data.city } : {}),
         leadType: data.leadType,
-        packageInterest: packageId,
-        conceptInterest: conceptId,
-        businessType: data.businessType,
-        hasLocation: data.hasLocation,
-        startupBudget: data.startupBudget,
-        launchTimeline: data.launchTimeline,
-        message: data.message,
-        consentTimestamp: new Date().toISOString(),
+        ...(packageId ? { packageInterest: packageId } : {}),
+        ...(conceptId ? { conceptInterest: conceptId } : {}),
+        ...(data.businessType ? { businessType: data.businessType } : {}),
+        ...(data.hasLocation ? { hasLocation: data.hasLocation } : {}),
+        ...(data.startupBudget ? { startupBudget: data.startupBudget } : {}),
+        ...(data.launchTimeline ? { launchTimeline: data.launchTimeline } : {}),
+        ...(data.message ? { message: data.message } : {}),
+        consentTimestamp: new Date(),
         stage: 'new',
-        sourceURL: data.sourceURL,
-        utmSource: data.utmSource,
-        utmMedium: data.utmMedium,
-        utmCampaign: data.utmCampaign,
-        categoryParam: data.categoryParam,
-        locationParam: data.locationParam,
+        ...(data.sourceURL ? { sourceURL: data.sourceURL } : {}),
+        ...(data.utmSource ? { utmSource: data.utmSource } : {}),
+        ...(data.utmMedium ? { utmMedium: data.utmMedium } : {}),
+        ...(data.utmCampaign ? { utmCampaign: data.utmCampaign } : {}),
+        ...(data.categoryParam ? { categoryParam: data.categoryParam } : {}),
+        ...(data.locationParam ? { locationParam: data.locationParam } : {}),
       },
     })
 
     return { status: 'success' }
   } catch (err) {
-    console.error('[The Business Barn] Lead submission error:', err)
+    const detail = err instanceof Error ? err.message : String(err)
+    console.error('[The Business Barn] Lead submission error:', detail, err)
     return {
       status: 'serverError',
       message: 'Something went wrong. Please try again or email us directly.',
