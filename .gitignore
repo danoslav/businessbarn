@@ -19,6 +19,9 @@ dist/
 src/payload-types.ts
 .payload/
 
+# TypeScript incremental
+tsconfig.tsbuildinfo
+
 # misc
 .DS_Store
 *.pem
