@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import GoogleAnalyticsHead from '@/components/analytics/GoogleAnalyticsHead'
 import GtagPageView from '@/components/analytics/GtagPageView'
 import CtaClickListener from '@/components/analytics/CtaClickListener'
-import { getSiteUrl } from '@/lib/site'
+import { getSiteUrl } from '@/lib/site-url'
 import '../globals.css'
 
 const inter = Inter({

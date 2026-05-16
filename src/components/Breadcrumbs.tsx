@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getSiteUrl } from '@/lib/site'
+import { getSiteUrl } from '@/lib/site-url'
 
 type Crumb = { label: string; href?: string }
 

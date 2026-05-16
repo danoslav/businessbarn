@@ -5,7 +5,7 @@
  * `header_book_call`, `home_hero_consulting`, `package_card_view_accelerator`.
  */
 
-import { getSiteUrl } from './site'
+import { getSiteUrl } from './site-url'
 
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? ''
 

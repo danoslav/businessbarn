@@ -1,12 +1,6 @@
 import { headers } from 'next/headers'
 
-/** Canonical public site URL (no trailing slash). Used by metadata, JSON-LD, and fallbacks. */
-export function getSiteUrl(): string {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL || 'https://thebusinessbarn.ca'
-  const trimmed = raw.trim().replace(/\/$/, '')
-  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed
-  return `https://${trimmed}`
-}
+import { getSiteUrl } from './site-url'
 
 /**
  * Origin for the current HTTP request (scheme + host, no trailing slash).
