@@ -1,6 +1,7 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
+import { useActionState, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { submitLead, type LeadState } from '@/lib/actions'
 import { gtagEvent } from '@/lib/gtag'
 
@@ -25,6 +26,7 @@ export default function LeadForm({
   heading = 'Book a planning call',
   subheading = "Tell us what you're working on and we'll get back to you within one business day.",
 }: Props) {
+  const router = useRouter()
   const [state, action, pending] = useActionState(submitLead, INITIAL)
 
   useEffect(() => {
@@ -38,15 +40,14 @@ export default function LeadForm({
       page_path,
       page_location: window.location.href,
     })
-  }, [state.status, leadType, packageSlug, conceptSlug])
+    router.push('/book-a-call/thank-you')
+  }, [state.status, leadType, packageSlug, conceptSlug, router])
 
   if (state.status === 'success') {
     return (
       <div className="bg-field-50 border border-field-200 rounded-lg p-8 text-center">
-        <p className="font-serif text-xl font-semibold text-field-700 mb-2">Got it — thanks!</p>
-        <p className="text-sm text-ink-600">
-          We review every submission and will be in touch within one business day.
-        </p>
+        <p className="font-serif text-xl font-semibold text-field-700 mb-2">Redirecting…</p>
+        <p className="text-sm text-ink-600">Taking you to your confirmation page.</p>
       </div>
     )
   }
@@ -75,6 +76,7 @@ export default function LeadForm({
         {conceptSlug && <input type="hidden" name="conceptSlug" value={conceptSlug} />}
         {categoryParam && <input type="hidden" name="categoryParam" value={categoryParam} />}
         {locationParam && <input type="hidden" name="locationParam" value={locationParam} />}
+        <SourceUrlField />
 
         <div className="grid sm:grid-cols-2 gap-4">
           <Field label="Full name *" error={fieldError('name')}>
@@ -155,6 +157,16 @@ export default function LeadForm({
       </form>
     </div>
   )
+}
+
+function SourceUrlField() {
+  const [sourceURL, setSourceURL] = useState('')
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setSourceURL(window.location.href)
+    }
+  }, [])
+  return <input type="hidden" name="sourceURL" value={sourceURL} readOnly />
 }
 
 function Field({

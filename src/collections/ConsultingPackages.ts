@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+import { publicReadAdminWrite } from '../access/cms'
+
 export const ConsultingPackages: CollectionConfig = {
   slug: 'consulting-packages',
   admin: {
@@ -7,9 +9,7 @@ export const ConsultingPackages: CollectionConfig = {
     group: 'Consulting',
     defaultColumns: ['name', 'tier', 'priceLabel'],
   },
-  access: {
-    read: () => true,
-  },
+  access: publicReadAdminWrite,
   fields: [
     {
       name: 'name',

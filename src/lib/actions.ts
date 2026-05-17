@@ -1,7 +1,29 @@
 'use server'
 
+import { randomUUID } from 'crypto'
 import { z } from 'zod'
 import { getPayloadClient } from './payload'
+
+function logLeadError(ref: string, err: unknown) {
+  const detail = err instanceof Error ? err.message : String(err)
+  const code =
+    err && typeof err === 'object' && 'code' in err ? String((err as { code: unknown }).code) : ''
+  if (detail.includes('does not exist') || code === '42P01') {
+    console.error(
+      `[The Business Barn] Lead submission error [${ref}]: database tables missing — run npm run db:migrate on this environment.`,
+      detail,
+    )
+    return
+  }
+  if (detail.includes('connect') || code === 'ECONNREFUSED' || code === '28P01') {
+    console.error(
+      `[The Business Barn] Lead submission error [${ref}]: database connection failed. Check DATABASE_URL.`,
+      detail,
+    )
+    return
+  }
+  console.error(`[The Business Barn] Lead submission error [${ref}]:`, detail, err)
+}
 
 const leadSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -78,6 +100,7 @@ export async function submitLead(
   }
 
   const data = parsed.data
+  const ref = randomUUID().slice(0, 8)
 
   try {
     const payload = await getPayloadClient()
@@ -131,8 +154,7 @@ export async function submitLead(
 
     return { status: 'success' }
   } catch (err) {
-    const detail = err instanceof Error ? err.message : String(err)
-    console.error('[The Business Barn] Lead submission error:', detail, err)
+    logLeadError(ref, err)
     return {
       status: 'serverError',
       message: 'Something went wrong. Please try again or email us directly.',

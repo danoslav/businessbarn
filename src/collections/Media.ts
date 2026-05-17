@@ -1,13 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
+import { publicReadAdminWrite } from '../access/cms'
+
 export const Media: CollectionConfig = {
   slug: 'media',
   admin: {
     group: 'Content',
   },
-  access: {
-    read: () => true,
-  },
+  access: publicReadAdminWrite,
   upload: {
     staticDir: 'public/media',
     imageSizes: [

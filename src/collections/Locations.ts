@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+import { publicReadAdminWrite } from '../access/cms'
+
 export const Locations: CollectionConfig = {
   slug: 'locations',
   admin: {
@@ -7,9 +9,7 @@ export const Locations: CollectionConfig = {
     group: 'Concepts',
     defaultColumns: ['name', 'slug', 'province'],
   },
-  access: {
-    read: () => true,
-  },
+  access: publicReadAdminWrite,
   fields: [
     {
       name: 'name',

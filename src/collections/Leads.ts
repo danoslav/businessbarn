@@ -15,11 +15,29 @@ export const Leads: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ doc, operation }) => {
+      async ({ doc, operation, req }) => {
         if (operation !== 'create') return
         console.log(
           `[The Business Barn] New lead: ${doc.name} <${doc.email}> — ${doc.leadType}`,
         )
+        const notifyTo = process.env.LEADS_NOTIFY_EMAIL
+        if (!notifyTo || !req.payload.email) return
+        try {
+          await req.payload.sendEmail({
+            to: notifyTo,
+            subject: `New lead: ${doc.name} (${doc.leadType})`,
+            html: `
+              <p><strong>${doc.name}</strong> &lt;${doc.email}&gt;</p>
+              <p>Type: ${doc.leadType}</p>
+              ${doc.phone ? `<p>Phone: ${doc.phone}</p>` : ''}
+              ${doc.city ? `<p>City: ${doc.city}</p>` : ''}
+              ${doc.message ? `<p>Message: ${doc.message}</p>` : ''}
+              <p><a href="${process.env.NEXT_PUBLIC_SITE_URL || ''}/admin/collections/leads">View in admin</a></p>
+            `,
+          })
+        } catch (err) {
+          console.error('[The Business Barn] Lead notification email failed:', err)
+        }
       },
     ],
   },
