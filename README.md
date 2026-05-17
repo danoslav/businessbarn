@@ -81,7 +81,7 @@ Marketing site and headless CMS for **The Business Barn**: small-business planni
 
 ## Database migrations
 
-Schema lives in `src/migrations/`. On Vercel, `scripts/vercel-build.sh` runs `npm run db:migrate` before `next build` when `DATABASE_URL` is set.
+Schema lives in `src/migrations/`. In production, Payload applies `prodMigrations` automatically on first database connect (during `next build` SSG and at runtime). Run `npm run db:migrate` locally or in a one-off shell when you need to migrate outside deploy.
 
 Locally after pulling schema changes:
 

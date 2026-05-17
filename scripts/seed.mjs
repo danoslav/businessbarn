@@ -6,7 +6,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { getPayload } from '../node_modules/payload/dist/index.js'
+import payload from '../node_modules/payload/dist/index.js'
 import {
   categories,
   concepts,
@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'production' && process.env.SEED_ALLOW_PRODUCTION !
 
 const configPath = path.resolve(process.cwd(), 'src/payload.config.ts')
 const { default: config } = await import(pathToFileURL(configPath).href)
-const payload = await getPayload({ config })
+await payload.init({ config, disableOnInit: true })
 
 async function findIdBySlug(collection, slug) {
   const result = await payload.find({
