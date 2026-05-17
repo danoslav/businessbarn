@@ -2,11 +2,37 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Where } from 'payload'
 
+const PAYLOAD_INIT_TIMEOUT_MS = 25_000
+
 let cached: ReturnType<typeof getPayload> | null = null
+
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(`${label} timed out after ${ms}ms`))
+    }, ms)
+    promise.then(
+      (value) => {
+        clearTimeout(timer)
+        resolve(value)
+      },
+      (err) => {
+        clearTimeout(timer)
+        reject(err)
+      },
+    )
+  })
+}
 
 export async function getPayloadClient() {
   if (!cached) {
-    cached = getPayload({ config })
+    cached = withTimeout(getPayload({ config }), PAYLOAD_INIT_TIMEOUT_MS, 'Payload init').catch(
+      (err) => {
+        cached = null
+        console.error('[The Business Barn] Payload init failed:', err)
+        throw err
+      },
+    )
   }
   return cached
 }

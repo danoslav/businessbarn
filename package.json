@@ -13,9 +13,11 @@
     "lint": "next lint",
     "generate:types": "payload generate:types",
     "generate:importmap": "payload generate:importmap",
-    "db:migrate": "tsx scripts/db-migrate.mjs",
-    "db:migrate:create": "tsx scripts/db-migrate-create.mjs",
-    "seed": "tsx scripts/seed.mjs"
+    "db:migrate": "node scripts/run-payload-cli.mjs scripts/db-migrate.mjs",
+    "db:migrate:create": "node scripts/run-payload-cli.mjs scripts/db-migrate-create.mjs",
+    "seed": "node scripts/run-payload-cli.mjs scripts/seed.mjs",
+    "db:mark-migration": "node scripts/run-payload-cli.mjs scripts/db-mark-migration.mjs",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.0.0",
@@ -31,6 +33,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sharp": "^0.33.0",
+    "vercel": "^54.1.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
@@ -41,6 +44,7 @@
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.0.0",
     "postcss": "^8.4.47",
+    "patch-package": "^8.0.1",
     "tailwindcss": "^3.4.14",
     "tsx": "^4.22.1",
     "typescript": "^5.6.3"

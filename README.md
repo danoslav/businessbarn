@@ -59,6 +59,7 @@ Marketing site and headless CMS for **The Business Barn**: small-business planni
 | `npm run db:migrate`         | Apply Payload migrations to Postgres    |
 | `npm run db:migrate:create`  | Generate a new migration after schema changes |
 | `npm run seed`               | Idempotent demo content (categories, concepts, packages, resources) |
+| `npm run db:mark-migration`  | Record file migration as applied when schema exists from dev push only |
 | `npm run generate:types`     | Regenerate Payload TypeScript types     |
 | `npm run generate:importmap` | Regenerate Payload admin import map     |
 
@@ -81,7 +82,15 @@ Marketing site and headless CMS for **The Business Barn**: small-business planni
 
 ## Database migrations
 
-Schema lives in `src/migrations/`. In production, Payload applies `prodMigrations` automatically on first database connect (during `next build` SSG and at runtime). Run `npm run db:migrate` locally or in a one-off shell when you need to migrate outside deploy.
+Schema lives in `src/migrations/`. In production, Payload applies `prodMigrations` on first database connect. If Neon already has tables from **dev push** and `payload_migrations` only shows `name = dev`, run once:
+
+```bash
+npm run db:mark-migration
+```
+
+That stops production from re-running the large file migration on every cold start (which can hang `/`).
+
+CLI scripts use `patch-package` on Payload’s `loadEnv` (applied on `npm install`). **Do not** `source .env.local` in bash when URLs contain `&` — scripts read `.env.local` safely.
 
 Locally after pulling schema changes:
 
@@ -102,7 +111,13 @@ npm run db:migrate
 npm run seed
 ```
 
-Production: set `SEED_ALLOW_PRODUCTION=true` only when you intend to run seed once.
+Production (with Production `DATABASE_URL` in `.env.local`):
+
+```bash
+SEED_ALLOW_PRODUCTION=true npm run seed
+```
+
+Do not `source .env.local` before seed — the script loads env files itself.
 
 ## CRM (Payload admin)
 
