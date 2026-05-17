@@ -7,7 +7,6 @@ import { pathToFileURL } from 'node:url'
 import { loadEnvFiles } from './load-env-file.mjs'
 
 loadEnvFiles()
-
 if (!process.env.DATABASE_URL) {
   console.warn('DATABASE_URL not set — skipping migrations.')
   process.exit(0)

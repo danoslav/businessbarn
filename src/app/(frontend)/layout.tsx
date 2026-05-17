@@ -13,6 +13,7 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
+  preload: true,
 })
 
 const fraunces = Fraunces({
@@ -20,6 +21,8 @@ const fraunces = Fraunces({
   variable: '--font-serif',
   display: 'swap',
   axes: ['opsz'],
+  preload: true,
+  adjustFontFallback: true,
 })
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -27,6 +30,7 @@ const ibmPlexMono = IBM_Plex_Mono({
   variable: '--font-mono',
   weight: ['400', '500'],
   display: 'swap',
+  preload: false,
 })
 
 export const metadata: Metadata = {
@@ -86,9 +90,9 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <GoogleAnalyticsHead />
       </head>
       <body className="min-h-screen flex flex-col">
+        <GoogleAnalyticsHead />
         <Suspense fallback={null}>
           <GtagPageView />
         </Suspense>

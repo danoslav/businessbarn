@@ -4,7 +4,7 @@ import ConceptCard from '@/components/ConceptCard'
 import DisclaimerBlock from '@/components/DisclaimerBlock'
 import { getConcepts, getCategories, getLocations } from '@/lib/payload'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 type SearchParams = { category?: string; location?: string }
 

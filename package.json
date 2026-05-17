@@ -17,6 +17,8 @@
     "db:migrate:create": "node scripts/run-payload-cli.mjs scripts/db-migrate-create.mjs",
     "seed": "node scripts/run-payload-cli.mjs scripts/seed.mjs",
     "db:mark-migration": "node scripts/run-payload-cli.mjs scripts/db-mark-migration.mjs",
+    "db:reset": "node scripts/run-payload-cli.mjs scripts/db-reset.mjs",
+    "db:apply-initial": "node scripts/run-payload-cli.mjs scripts/db-apply-initial.mjs",
     "postinstall": "patch-package"
   },
   "dependencies": {
@@ -36,6 +38,12 @@
     "vercel": "^54.1.0",
     "zod": "^3.23.0"
   },
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 111",
+    "safari >= 16.4"
+  ],
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",

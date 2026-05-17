@@ -1,6 +1,9 @@
+import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Where } from 'payload'
+
+const CMS_REVALIDATE_SECONDS = 300
 
 const PAYLOAD_INIT_TIMEOUT_MS = 25_000
 
@@ -55,15 +58,19 @@ export function formatPriceRange(min: number, max: number): string {
 
 // ─── Consulting Packages ──────────────────────────────────────────────────────
 
-export async function getConsultingPackages() {
-  const payload = await getPayloadClient()
-  const result = await payload.find({
-    collection: 'consulting-packages',
-    sort: 'tier',
-    limit: 10,
-  })
-  return result.docs
-}
+export const getConsultingPackages = unstable_cache(
+  async () => {
+    const payload = await getPayloadClient()
+    const result = await payload.find({
+      collection: 'consulting-packages',
+      sort: 'tier',
+      limit: 10,
+    })
+    return result.docs
+  },
+  ['consulting-packages-list'],
+  { revalidate: CMS_REVALIDATE_SECONDS, tags: ['consulting-packages'] },
+)
 
 export async function getConsultingPackageBySlug(slug: string) {
   const payload = await getPayloadClient()
@@ -84,21 +91,35 @@ export async function getConcepts(opts?: {
   limit?: number
   featuredOnly?: boolean
 }) {
-  const payload = await getPayloadClient()
+  const cacheKey = [
+    'concepts-list',
+    opts?.category ?? '',
+    opts?.location ?? '',
+    String(opts?.limit ?? 30),
+    opts?.featuredOnly ? 'featured' : 'all',
+  ].join(':')
 
-  const conditions: Where[] = [{ status: { equals: 'published' } }]
-  if (opts?.featuredOnly) conditions.push({ featured: { equals: true } })
+  return unstable_cache(
+    async () => {
+      const payload = await getPayloadClient()
 
-  const where: Where = { and: conditions }
+      const conditions: Where[] = [{ status: { equals: 'published' } }]
+      if (opts?.featuredOnly) conditions.push({ featured: { equals: true } })
 
-  const result = await payload.find({
-    collection: 'concepts',
-    where,
-    limit: opts?.limit ?? 30,
-    depth: 2,
-  })
+      const where: Where = { and: conditions }
 
-  return result.docs
+      const result = await payload.find({
+        collection: 'concepts',
+        where,
+        limit: opts?.limit ?? 30,
+        depth: 2,
+      })
+
+      return result.docs
+    },
+    [cacheKey],
+    { revalidate: CMS_REVALIDATE_SECONDS, tags: ['concepts'] },
+  )()
 }
 
 export async function getConceptBySlug(slug: string) {

@@ -8,30 +8,36 @@ const MIGRATION_NAME = '20260517_153526_20250517_initial'
 
 requireDatabaseUrl()
 
-const { default: postgres } = await import('postgres')
+const { default: pkg } = await import('pg')
+const { Pool } = pkg
 
-const sql = postgres(process.env.DATABASE_URL, { max: 1 })
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+  max: 1,
+  connectionTimeoutMillis: 15000,
+})
 
 try {
-  const existing = await sql`
-    SELECT name FROM payload_migrations WHERE name = ${MIGRATION_NAME} LIMIT 1
-  `
-  if (existing.length > 0) {
+  const existing = await pool.query(
+    'SELECT name FROM payload_migrations WHERE name = $1 LIMIT 1',
+    [MIGRATION_NAME],
+  )
+  if (existing.rows.length > 0) {
     console.log(`Migration "${MIGRATION_NAME}" is already recorded.`)
-    process.exit(0)
+  } else {
+    const maxBatch = await pool.query(
+      'SELECT COALESCE(MAX(batch), 0) AS max_batch FROM payload_migrations WHERE batch >= 0',
+    )
+    const batch = Number(maxBatch.rows[0]?.max_batch ?? 0) + 1
+
+    await pool.query(
+      'INSERT INTO payload_migrations (name, batch, created_at, updated_at) VALUES ($1, $2, NOW(), NOW())',
+      [MIGRATION_NAME, batch],
+    )
+
+    console.log(`Recorded migration "${MIGRATION_NAME}" (batch ${batch}).`)
   }
-
-  const maxBatch = await sql`
-    SELECT COALESCE(MAX(batch), 0) AS max_batch FROM payload_migrations WHERE batch >= 0
-  `
-  const batch = Number(maxBatch[0]?.max_batch ?? 0) + 1
-
-  await sql`
-    INSERT INTO payload_migrations (name, batch, created_at, updated_at)
-    VALUES (${MIGRATION_NAME}, ${batch}, NOW(), NOW())
-  `
-
-  console.log(`Recorded migration "${MIGRATION_NAME}" (batch ${batch}).`)
 } finally {
-  await sql.end()
+  await pool.end()
 }

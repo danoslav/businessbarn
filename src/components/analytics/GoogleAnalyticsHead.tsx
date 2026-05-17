@@ -1,6 +1,8 @@
+import Script from 'next/script'
+
 /**
- * Server-rendered GA4 loader so the Google tag appears in the initial HTML
- * (Tag Assistant / setup verification often does not wait for client hydration).
+ * GA4 via next/script so the tag loads after the page is interactive (better LCP).
+ * send_page_view is disabled; GtagPageView sends route changes.
  */
 function isValidGa4MeasurementId(id: string): boolean {
   return /^G-[A-Z0-9]+$/i.test(id.trim())
@@ -20,8 +22,13 @@ gtag('config', ${JSON.stringify(id)}, { send_page_view: false });
 
   return (
     <>
-      <script async src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`} />
-      <script dangerouslySetInnerHTML={{ __html: init }} />
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`}
+        strategy="afterInteractive"
+      />
+      <Script id="ga-init" strategy="afterInteractive">
+        {init}
+      </Script>
     </>
   )
 }

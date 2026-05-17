@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'picsum.photos' },
     ],
   },
+  experimental: {
+    optimizePackageImports: ['payload', '@payloadcms/richtext-lexical'],
+  },
 }
 
 export default withPayload(nextConfig)

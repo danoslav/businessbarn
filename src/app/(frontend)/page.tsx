@@ -1,12 +1,16 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import ConceptCard from '@/components/ConceptCard'
-import PackageCard from '@/components/PackageCard'
+import { Suspense } from 'react'
 import MethodologySteps from '@/components/MethodologySteps'
-import DisclaimerBlock from '@/components/DisclaimerBlock'
-import { getConcepts, getConsultingPackages } from '@/lib/payload'
+import { HomeFeaturedConcepts } from '@/components/home/HomeFeaturedConcepts'
+import {
+  HomeConceptsFallback,
+  HomePackagesFallback,
+} from '@/components/home/HomeCmsSectionsFallback'
+import { HomePackagesSection } from '@/components/home/HomePackagesSection'
 
-export const dynamic = 'force-dynamic'
+/** Revalidate CMS-driven sections; hero is static and streams immediately. */
+export const revalidate = 300
 
 export const metadata: Metadata = {
   title: 'Better questions. Better business starts. | The Business Barn',
@@ -23,15 +27,10 @@ const FOUNDER_QUESTIONS = [
   'What would make this fail?',
 ]
 
-export default async function HomePage() {
-  const [packages, concepts] = await Promise.all([
-    getConsultingPackages().catch(() => []),
-    getConcepts({ featuredOnly: true, limit: 3 }).catch(() => []),
-  ])
-
+export default function HomePage() {
   return (
     <>
-      {/* Hero */}
+      {/* Hero — static; not blocked by Payload */}
       <section className="bg-ink-900 text-white py-16 lg:py-24">
         <div className="site-container">
           <div className="max-w-3xl">
@@ -136,105 +135,13 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Package cards */}
-      {packages.length > 0 && (
-        <section className="bg-cream py-14 lg:py-20">
-          <div className="site-container">
-            <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-barn-600 mb-1">
-                  Planning packages
-                </p>
-                <h2 className="font-serif text-2xl font-bold text-ink-900">
-                  Choose the depth that fits your decision
-                </h2>
-              </div>
-              <Link href="/consulting" className="btn-ghost text-ink-600" data-ga-cta="home_packages_compare_link">
-                Compare all packages →
-              </Link>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {packages.map((pkg, i) => (
-                <PackageCard
-                  key={pkg.id}
-                  name={pkg.name}
-                  slug={pkg.slug}
-                  tagline={pkg.tagline ?? undefined}
-                  bestFor={
-                    Array.isArray(pkg.bestFor)
-                      ? pkg.bestFor.map((b: { item: string }) => b.item)
-                      : []
-                  }
-                  deliverables={
-                    Array.isArray(pkg.deliverables)
-                      ? pkg.deliverables.map((d: { item: string }) => d.item)
-                      : []
-                  }
-                  priceLabel={pkg.priceLabel ?? undefined}
-                  ctaLabel={pkg.ctaLabel ?? undefined}
-                  highlighted={i === 2}
-                />
-              ))}
-            </div>
-            <div className="mt-8 text-center">
-              <p className="text-sm text-ink-400">
-                Not sure which fits?{' '}
-                <Link
-                  href="/book-a-call"
-                  className="text-barn-600 underline hover:text-barn-800"
-                  data-ga-cta="home_packages_fit_call"
-                >
-                  Book a free 20-minute fit call →
-                </Link>
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
+      <Suspense fallback={<HomePackagesFallback />}>
+        <HomePackagesSection />
+      </Suspense>
 
-      {/* Featured concepts */}
-      {concepts.length > 0 && (
-        <section className="bg-white py-14 lg:py-20 border-t border-ink-100">
-          <div className="site-container">
-            <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-field-600 mb-1">
-                  Business concepts
-                </p>
-                <h2 className="font-serif text-2xl font-bold text-ink-900">
-                  Start from something already researched
-                </h2>
-              </div>
-              <Link href="/concepts" className="btn-ghost text-ink-600" data-ga-cta="home_concepts_browse_all">
-                Browse all concepts →
-              </Link>
-            </div>
-            <DisclaimerBlock short />
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-              {concepts.map((c) => {
-                const cat = typeof c.category === 'object' && c.category ? (c.category as { name: string }).name : undefined
-                return (
-                  <ConceptCard
-                    key={c.id}
-                    name={c.name}
-                    slug={c.slug}
-                    gaCta={`home_featured_concept_${c.slug}`}
-                    categoryName={cat}
-                    startupCostMin={c.startupCostMin}
-                    startupCostMax={c.startupCostMax}
-                    estimatedMonthlyRevenueMin={c.estimatedMonthlyRevenueMin ?? undefined}
-                    estimatedMonthlyRevenueMax={c.estimatedMonthlyRevenueMax ?? undefined}
-                    launchTimeline={c.launchTimeline ?? undefined}
-                    difficultyLevel={c.difficultyLevel ?? undefined}
-                    territoryStatus={c.territoryStatus as 'available' | 'limited' | 'sold'}
-                    shortDescription={c.shortDescription}
-                  />
-                )
-              })}
-            </div>
-          </div>
-        </section>
-      )}
+      <Suspense fallback={<HomeConceptsFallback />}>
+        <HomeFeaturedConcepts />
+      </Suspense>
 
       {/* Methodology preview */}
       <section className="bg-cream py-14 lg:py-20 border-t border-ink-100">
