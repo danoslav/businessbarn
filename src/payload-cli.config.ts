@@ -49,6 +49,7 @@ export default buildConfig({
     },
     migrationDir: path.resolve(dirname, 'migrations'),
     prodMigrations: migrations,
+    push: false,
   }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

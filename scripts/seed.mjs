@@ -6,7 +6,7 @@
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import payload from '../node_modules/payload/dist/index.js'
-import { loadEnvFiles } from './load-env-file.mjs'
+import { requireDatabaseUrl } from './load-env-file.mjs'
 import {
   categories,
   concepts,
@@ -16,17 +16,15 @@ import {
   resources,
 } from './seed-data.mjs'
 
-loadEnvFiles()
-
-if (!process.env.DATABASE_URL) {
-  console.error('DATABASE_URL is required to seed.')
-  process.exit(1)
-}
+requireDatabaseUrl()
 
 if (process.env.NODE_ENV === 'production' && process.env.SEED_ALLOW_PRODUCTION !== 'true') {
   console.error('Refusing to seed production without SEED_ALLOW_PRODUCTION=true')
   process.exit(1)
 }
+
+// Prevent drizzle pushDevSchema (breaks on legacy DB constraints vs current Leads schema)
+process.env.PAYLOAD_MIGRATING = 'true'
 
 const configPath = path.resolve(process.cwd(), 'src/payload-cli.config.ts')
 const { default: config } = await import(pathToFileURL(configPath).href)

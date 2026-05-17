@@ -1,5 +1,6 @@
 /**
  * Load .env.local / .env into process.env (safe for URLs with & — do not `source` in bash).
+ * Values from the file override existing env (fixes empty DATABASE_URL from broken `source`).
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -21,8 +22,26 @@ export function loadEnvFiles(cwd = process.cwd()) {
       ) {
         value = value.slice(1, -1)
       }
-      if (!process.env[key]) process.env[key] = value
+      process.env[key] = value
     }
     break
+  }
+
+  // Vercel + Neon often expose POSTGRES_URL but not DATABASE_URL
+  if (!process.env.DATABASE_URL && process.env.POSTGRES_URL) {
+    process.env.DATABASE_URL = process.env.POSTGRES_URL
+  }
+  if (!process.env.DATABASE_URL && process.env.POSTGRES_PRISMA_URL) {
+    process.env.DATABASE_URL = process.env.POSTGRES_PRISMA_URL
+  }
+}
+
+export function requireDatabaseUrl() {
+  loadEnvFiles()
+  if (!process.env.DATABASE_URL) {
+    console.error(
+      'DATABASE_URL is required. Add it to .env.local (or POSTGRES_URL from Vercel).',
+    )
+    process.exit(1)
   }
 }

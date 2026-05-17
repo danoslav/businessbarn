@@ -2,16 +2,11 @@
  * Record the production migration as applied when schema already exists (e.g. from dev push).
  * Does not run SQL — only inserts into payload_migrations if missing.
  */
-import { loadEnvFiles } from './load-env-file.mjs'
+import { requireDatabaseUrl } from './load-env-file.mjs'
 
 const MIGRATION_NAME = '20260517_153526_20250517_initial'
 
-loadEnvFiles()
-
-if (!process.env.DATABASE_URL) {
-  console.error('DATABASE_URL is required.')
-  process.exit(1)
-}
+requireDatabaseUrl()
 
 const { default: postgres } = await import('postgres')
 

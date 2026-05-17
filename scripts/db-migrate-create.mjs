@@ -5,11 +5,12 @@
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import payload from '../node_modules/payload/dist/index.js'
-import { loadEnvFiles } from './load-env-file.mjs'
+import { requireDatabaseUrl } from './load-env-file.mjs'
 
 const migrationName = process.argv[2] ?? `initial_${Date.now()}`
 
-loadEnvFiles()
+requireDatabaseUrl()
+process.env.PAYLOAD_MIGRATING = 'true'
 
 process.env.PAYLOAD_MIGRATING = 'true'
 
