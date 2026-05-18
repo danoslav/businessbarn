@@ -44,8 +44,8 @@ export default function TermsPage() {
 
           <h2>Intellectual property</h2>
           <p>
-            All content on this Site — including planning frameworks, concept descriptions, text,
-            and design — is owned by The Business Barn unless otherwise stated. You may not
+            All content on this Site, including planning frameworks, concept descriptions, text,
+            and design, is owned by The Business Barn unless otherwise stated. You may not
             reproduce or redistribute it without written permission.
           </p>
 

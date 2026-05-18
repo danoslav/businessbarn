@@ -47,7 +47,7 @@ export default async function ThankYouPage() {
           <p className="text-xs font-semibold uppercase tracking-widest text-harvest-300 mb-4">
             You are on the list
           </p>
-          <h1 className="font-serif text-4xl lg:text-5xl font-bold mb-4">Thank you — we got it</h1>
+          <h1 className="font-serif text-4xl lg:text-5xl font-bold mb-4">Thank you. We got it</h1>
           <p className="text-lg text-field-100 leading-relaxed max-w-xl">
             Your enquiry is in our queue. We review every submission personally and will reach out
             within one business day.

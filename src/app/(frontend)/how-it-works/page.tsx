@@ -5,14 +5,14 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 export const metadata: Metadata = {
   title: 'How It Works | The Business Barn',
   description:
-    'From your first idea to a plan that holds up under scrutiny — here is exactly how we work, what we need from you, and what you get back.',
+    'From your first idea to a plan that holds up under scrutiny: here is exactly how we work, what we need from you, and what you get back.',
 }
 
 const STEPS = [
   {
     number: '01',
     heading: 'Tell us about your idea',
-    body: 'You share a description of the business, who you think the customer is, and where you are considering operating. A one-page overview, a rough paragraph, or a conversation — all fine. We handle the research.',
+    body: 'You share a description of the business, who you think the customer is, and where you are considering operating. A one-page overview, a rough paragraph, or a conversation: all fine. We handle the research.',
   },
   {
     number: '02',
@@ -27,7 +27,7 @@ const STEPS = [
   {
     number: '04',
     heading: 'We build your plan document',
-    body: 'You get a clear, structured document — not a template with your words swapped in, but a researched plan with real numbers, real competitor names, and honest risk assessments.',
+    body: 'You get a clear, structured document: not a template with your words swapped in, but a researched plan with real numbers, real competitor names, and honest risk assessments.',
   },
   {
     number: '05',
@@ -37,7 +37,7 @@ const STEPS = [
   {
     number: '06',
     heading: 'You decide what to do next',
-    body: 'You get the plan in PDF and editable format. What you do with it is up to you — launch, pause, adjust, or pivot. We give you the clearest picture we can. The decision is always yours.',
+    body: 'You get the plan in PDF and editable format. What you do with it is up to you: launch, pause, adjust, or pivot. We give you the clearest picture we can. The decision is always yours.',
   },
 ]
 
@@ -52,7 +52,7 @@ export default function HowItWorksPage() {
           </p>
           <h1 className="font-serif text-4xl font-bold mb-3">How we work together</h1>
           <p className="text-base text-ink-300 max-w-xl">
-            From first conversation to finished plan — a clear, predictable process with no
+            From first conversation to finished plan: a clear, predictable process with no
             surprises.
           </p>
         </div>
@@ -93,7 +93,7 @@ export default function HowItWorksPage() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-barn-600 font-bold mt-0.5">→</span>
-                Responsiveness during the research period — we may need a few clarifications
+                Responsiveness during the research period: we may need a few clarifications
               </li>
             </ul>
             <Link href="/book-a-call" className="btn-primary" data-ga-cta="how_it_works_book_call">

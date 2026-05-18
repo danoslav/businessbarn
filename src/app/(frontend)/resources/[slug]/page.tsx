@@ -39,9 +39,9 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
         <div className="site-container max-w-3xl">
           {r.content ? (
             <div className="prose prose-sm max-w-none text-ink-700">
-              {/* Rich text rendering — simplified string fallback */}
+              {/* Rich text rendering: simplified string fallback */}
               <p className="text-ink-500 italic text-sm">
-                [Content rendered from CMS — requires rich text renderer]
+                [Content rendered from CMS. Requires rich text renderer.]
               </p>
             </div>
           ) : null}

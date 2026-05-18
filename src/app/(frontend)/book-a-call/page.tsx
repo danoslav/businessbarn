@@ -21,7 +21,7 @@ export default function BookACallPage() {
           <h1 className="font-serif text-4xl font-bold mb-3">Bring your idea to the Barn</h1>
           <p className="text-base text-ink-300 max-w-xl">
             Fill in the form below and we will be in touch within one business day to arrange
-            your free 20-minute planning fit call. No pitch required — just tell us what you
+            your free 20-minute planning fit call. No pitch required. Just tell us what you
             are working on.
           </p>
         </div>

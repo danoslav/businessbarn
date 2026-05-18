@@ -23,7 +23,7 @@ const FAQ_ITEMS = [
   {
     question: 'Do I need a business idea before booking?',
     answer:
-      'You need a working idea — a rough description of what the business does, who the customer is, and roughly where you want to operate. You do not need a polished pitch or any financial projections.',
+      'You need a working idea: a rough description of what the business does, who the customer is, and roughly where you want to operate. You do not need a polished pitch or any financial projections.',
   },
   {
     question: 'Do you guarantee the plan will work?',
@@ -33,7 +33,7 @@ const FAQ_ITEMS = [
   {
     question: 'What if my idea is not viable?',
     answer:
-      "That is one of the most valuable things a planning process can surface. If our research identifies major demand, cost, or competitive issues, we will say so clearly — with specific reasoning, not vague caution. You can decide how to respond to that information.",
+      "That is one of the most valuable things a planning process can surface. If our research identifies major demand, cost, or competitive issues, we will say so clearly, with specific reasoning, not vague caution. You can decide how to respond to that information.",
   },
   {
     question: 'Can I upgrade between tiers?',
@@ -43,7 +43,7 @@ const FAQ_ITEMS = [
   {
     question: 'Is this the same as franchising?',
     answer:
-      'No. We provide planning and analysis services. We do not sell franchise rights, require royalties, or mandate operating standards. Our Business Concepts are independently operated ventures — not franchised systems.',
+      'No. We provide planning and analysis services. We do not sell franchise rights, require royalties, or mandate operating standards. Our Business Concepts are independently operated ventures, not franchised systems.',
   },
 ]
 

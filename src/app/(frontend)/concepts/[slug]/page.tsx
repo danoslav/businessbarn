@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     : undefined
 
   return {
-    title: `${concept.name} Business Concept${cat ? ` — ${cat}` : ''} | The Business Barn`,
+    title: `${concept.name} Business Concept${cat ? ` (${cat})` : ''} | The Business Barn`,
     description: concept.shortDescription,
   }
 }
@@ -202,7 +202,7 @@ export default async function ConceptDetailPage({ params }: { params: Promise<{ 
                   <Stat
                     label="Monthly revenue (illus.)"
                     value={`${formatPriceRange(c.estimatedMonthlyRevenueMin, c.estimatedMonthlyRevenueMax)}/mo`}
-                    note="Illustrative only — not a guarantee"
+                    note="Illustrative only. Not a guarantee."
                   />
                 )}
                 {c.grossMarginMin && c.grossMarginMax && (

@@ -24,7 +24,7 @@ const STATIC_PACKAGES: Record<string, {
     name: 'Basic Plan',
     tagline: 'Validate the concept, understand the risk',
     shortDescription:
-      'The starting point for any serious business idea. We examine the core assumptions — who buys, what it costs, who competes, and whether the concept holds up — and give you a clear, honest summary document.',
+      'The starting point for any serious business idea. We examine the core assumptions: who buys, what it costs, who competes, and whether the concept holds up. Then we give you a clear, honest summary document.',
     bestFor: [
       'First-time founders still testing the idea',
       'Experienced operators exploring a new category',
@@ -56,7 +56,7 @@ const STATIC_PACKAGES: Record<string, {
       {
         question: 'How is this different from a business plan template?',
         answer:
-          'Templates give you sections to fill in. We give you researched content for each section — real competitor names, real demand signals, and honest risk assessments based on your specific idea and location.',
+          'Templates give you sections to fill in. We give you researched content for each section: real competitor names, real demand signals, and honest risk assessments based on your specific idea and location.',
       },
       {
         question: 'Will you tell me if the idea is bad?',
@@ -69,7 +69,7 @@ const STATIC_PACKAGES: Record<string, {
     name: 'Accelerator Plan',
     tagline: 'Build on validation with financial depth',
     shortDescription:
-      'Everything in the Basic Plan plus a two-year revenue projection, break-even estimate, and detailed location research. For founders who need numbers to make a confident decision — or to show a lender or partner.',
+      'Everything in the Basic Plan plus a two-year revenue projection, break-even estimate, and detailed location research. For founders who need numbers to make a confident decision, or to show a lender or partner.',
     bestFor: [
       'Founders ready to commit to a location or lease',
       'Businesses where local foot traffic and demographics matter',
@@ -94,7 +94,7 @@ const STATIC_PACKAGES: Record<string, {
       {
         question: 'Are the revenue projections realistic?',
         answer:
-          'We build three scenarios — conservative, base, and optimistic — with explicit assumptions for each. We document what needs to be true to hit each number. We do not build hockey-stick projections.',
+          'We build three scenarios (conservative, base, and optimistic) with explicit assumptions for each. We document what needs to be true to hit each number. We do not build hockey-stick projections.',
       },
       {
         question: 'What locations can you research?',
@@ -107,7 +107,7 @@ const STATIC_PACKAGES: Record<string, {
     name: 'Digital Incubator',
     tagline: 'Add a complete digital go-to-market layer',
     shortDescription:
-      'The Accelerator Plan extended with a full digital go-to-market strategy — website plan, local SEO, social and content plan, launch funnel, and measurement framework. For founders who know digital is central to their customer acquisition.',
+      'The Accelerator Plan extended with a full digital go-to-market strategy: website plan, local SEO, social and content plan, launch funnel, and measurement framework. For founders who know digital is central to their customer acquisition.',
     bestFor: [
       'Founders launching a business where customers find them online first',
       'Retail, service, and hospitality businesses competing on local search',
@@ -132,12 +132,12 @@ const STATIC_PACKAGES: Record<string, {
       {
         question: 'Do you build the website for me?',
         answer:
-          'No. The Digital Incubator gives you a detailed plan for your website and digital presence — page structure, SEO priorities, content strategy — which you or a developer/designer implements.',
+          'No. The Digital Incubator gives you a detailed plan for your website and digital presence (page structure, SEO priorities, content strategy) which you or a developer/designer implements.',
       },
       {
         question: 'Which social platforms do you plan for?',
         answer:
-          'We match platform selection to your customer profile and business type. We do not recommend platforms because they are popular — we recommend them because your specific customers use them.',
+          'We match platform selection to your customer profile and business type. We do not recommend platforms because they are popular. We recommend them because your specific customers use them.',
       },
     ],
   },
@@ -145,7 +145,7 @@ const STATIC_PACKAGES: Record<string, {
     name: 'Superscaler Plan',
     tagline: 'Full planning for funding-ready founders',
     shortDescription:
-      'Our most comprehensive engagement. Includes everything in the Digital Incubator plus a funding-readiness layer — a grant and funding opportunity scan, a draft funding narrative, and a use-of-funds summary ready for lender or investor conversations.',
+      'Our most comprehensive engagement. Includes everything in the Digital Incubator plus a funding-readiness layer: a grant and funding opportunity scan, a draft funding narrative, and a use-of-funds summary ready for lender or investor conversations.',
     bestFor: [
       'Founders applying for business loans, grants, or investment',
       'Multi-location or expansion-phase operators',
@@ -175,7 +175,7 @@ const STATIC_PACKAGES: Record<string, {
       {
         question: 'Is the funding narrative investor-ready?',
         answer:
-          'It is a strong draft — it covers your business summary, opportunity, competitive position, use of funds, and financial projections. Most founders refine it with feedback from their lender or advisor before submitting.',
+          'It is a strong draft. It covers your business summary, opportunity, competitive position, use of funds, and financial projections. Most founders refine it with feedback from their lender or advisor before submitting.',
       },
     ],
   },

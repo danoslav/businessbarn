@@ -66,7 +66,7 @@ export default async function ConceptsPage({ searchParams }: { searchParams: Pro
           <h1 className="font-serif text-4xl font-bold mb-3">{pageHeading}</h1>
           <p className="text-base text-ink-300 max-w-xl">
             Each concept has been modelled for startup cost, revenue potential, operator fit,
-            and local market demand. These are starting points — not guarantees.
+            and local market demand. These are starting points, not guarantees.
           </p>
         </div>
       </section>

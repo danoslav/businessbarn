@@ -23,8 +23,8 @@ export default function EarningsDisclaimerPage() {
           <p>
             The Business Barn (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) provides
             business planning services and a marketplace of business concept information. All
-            financial figures — including but not limited to startup cost estimates, monthly
-            revenue projections, gross margin ranges, and break-even estimates — are{' '}
+            financial figures, including but not limited to startup cost estimates, monthly
+            revenue projections, gross margin ranges, and break-even estimates, are{' '}
             <strong>illustrative estimates only</strong>.
           </p>
 
@@ -53,7 +53,7 @@ export default function EarningsDisclaimerPage() {
           <p>
             Nothing on this website or in any planning document we produce constitutes financial,
             legal, tax, or investment advice. You should consult qualified independent professionals
-            — including accountants, lawyers, and financial advisors — before making any business
+            , including accountants, lawyers, and financial advisors, before making any business
             commitment.
           </p>
 

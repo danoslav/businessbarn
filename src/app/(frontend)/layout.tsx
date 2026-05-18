@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(`${getSiteUrl()}/`),
   title: {
     template: '%s | The Business Barn',
-    default: 'The Business Barn — Better questions. Better business starts.',
+    default: 'The Business Barn | Better questions. Better business starts.',
   },
   description:
     'Practical business planning packages and pre-vetted business concepts for founders who want real numbers before they commit.',

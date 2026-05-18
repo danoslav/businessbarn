@@ -36,7 +36,7 @@ export default function AboutPage() {
               to run it.
             </p>
             <p className="text-sm text-ink-600 leading-relaxed mb-4">
-              That is not a failure of ambition — it is a failure of the planning process most
+              That is not a failure of ambition. It is a failure of the planning process most
               founders have access to. Business plan templates ask you to fill in a market size
               number. Advisors give vague encouragement. Online courses sell the dream of
               entrepreneurship without stress-testing the conditions for success.
@@ -53,7 +53,7 @@ export default function AboutPage() {
               {[
                 {
                   lead: 'The best business plan is honest.',
-                  body: 'A plan that inflates your addressable market or ignores a dominant competitor is not a plan — it is a wish list. We document what needs to be true for the business to work.',
+                  body: 'A plan that inflates your addressable market or ignores a dominant competitor is not a plan. It is a wish list. We document what needs to be true for the business to work.',
                 },
                 {
                   lead: 'Real founders deserve real numbers.',
@@ -61,11 +61,11 @@ export default function AboutPage() {
                 },
                 {
                   lead: 'A good plan can say no.',
-                  body: 'If the concept does not hold up under scrutiny, we will say so — clearly, specifically, and with reasoning. That is part of the value.',
+                  body: 'If the concept does not hold up under scrutiny, we will say so clearly, specifically, and with reasoning. That is part of the value.',
                 },
                 {
                   lead: 'The decision is always yours.',
-                  body: 'We give you the clearest picture we can build. What you do with it is entirely your call. We are not here to manage your business — we are here to help you decide whether to start it.',
+                  body: 'We give you the clearest picture we can build. What you do with it is entirely your call. We are not here to manage your business. We are here to help you decide whether to start it.',
                 },
               ].map(({ lead, body }) => (
                 <li key={lead} className="text-sm text-ink-600 leading-relaxed">
@@ -80,7 +80,7 @@ export default function AboutPage() {
               Ready to start?
             </h2>
             <p className="text-sm text-ink-600 leading-relaxed mb-5">
-              The first step is a free 20-minute planning call. No pitch, no pressure — just
+              The first step is a free 20-minute planning call. No pitch, no pressure. Just
               honest questions to find out if we are the right fit for what you are building.
             </p>
             <div className="flex flex-wrap gap-3">

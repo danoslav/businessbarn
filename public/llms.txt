@@ -1,6 +1,6 @@
 # The Business Barn
 
-> Small-business planning for real-world founders in Canada. Business planning packages (four tiers) and a marketplace of pre-vetted business concepts with illustrative financials — not guarantees.
+> Small-business planning for real-world founders in Canada. Business planning packages (four tiers) and a marketplace of pre-vetted business concepts with illustrative financials, not guarantees.
 
 The site is for founders who want research-backed plans and honest risk visibility before committing capital or signing a lease.
 
@@ -21,7 +21,7 @@ The site is for founders who want research-backed plans and honest risk visibili
 
 - [Terms of service](https://thebusinessbarn.ca/legal/terms)
 - [Privacy policy](https://thebusinessbarn.ca/legal/privacy)
-- [Earnings disclaimer](https://thebusinessbarn.ca/legal/earnings-disclaimer) — revenue and margin figures on concepts are illustrative only.
+- [Earnings disclaimer](https://thebusinessbarn.ca/legal/earnings-disclaimer): revenue and margin figures on concepts are illustrative only.
 
 ## Machine-readable discovery
 

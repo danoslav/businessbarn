@@ -36,7 +36,7 @@ export default function MethodologyPage() {
               Why we built this framework
             </h2>
             <p className="text-sm text-ink-600 leading-relaxed mb-4">
-              Most small business failures are not bad ideas — they are good ideas with unanswered
+              Most small business failures are not bad ideas. They are good ideas with unanswered
               questions. Demand that was assumed rather than researched. Costs that were
               underestimated because no one pressure-tested them. Competition that was ignored
               because the founder was in love with the concept.
@@ -69,7 +69,7 @@ export default function MethodologyPage() {
               </h3>
               <p className="text-sm text-ink-600 leading-relaxed mb-4">
                 Every business concept in our marketplace has already been run through this
-                framework. You see the results — including the risks — before you enquire.
+                framework. You see the results, including the risks, before you enquire.
               </p>
               <Link href="/concepts" className="btn-secondary text-sm py-2" data-ga-cta="methodology_concepts">
                 Browse concepts →

@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'BusinessBARN — Buy, Sell & Start Businesses in B.C.'
+export const alt = 'BusinessBARN | Buy, Sell & Start Businesses in B.C.'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 

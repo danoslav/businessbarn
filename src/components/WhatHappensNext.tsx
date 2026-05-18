@@ -10,7 +10,7 @@ const STEPS = [
   },
   {
     step: '3',
-    text: 'We book a free 20-minute fit call — no pitch, just honest questions to make sure we are the right fit for what you need.',
+    text: 'We book a free 20-minute fit call: no pitch, just honest questions to make sure we are the right fit for what you need.',
   },
   {
     step: '4',
@@ -56,7 +56,7 @@ export default function WhatHappensNext({ variant = 'sidebar' }: Props) {
           You do not need a polished idea
         </h3>
         <p className="text-sm text-ink-500 leading-relaxed">
-          A rough concept, a question you cannot answer, or a decision you are stuck on — all good
+          A rough concept, a question you cannot answer, or a decision you are stuck on. All good
           starting points. We will help you figure out what you actually need.
         </p>
       </div>

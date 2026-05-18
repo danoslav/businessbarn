@@ -12,17 +12,17 @@ const GENERAL = [
   {
     question: 'Who is The Business Barn for?',
     answer:
-      'We work with founders at the decision stage — people who have a business idea they are taking seriously and want to understand whether it can actually work before they commit time, money, or a lease. We are not a startup incubator, an investor, or a coaching service. We are a business planning and analysis practice.',
+      'We work with founders at the decision stage: people who have a business idea they are taking seriously and want to understand whether it can actually work before they commit time, money, or a lease. We are not a startup incubator, an investor, or a coaching service. We are a business planning and analysis practice.',
   },
   {
     question: 'What does The Business Barn actually do?',
     answer:
-      'Two things. First, we offer structured business planning packages — you bring an idea, we run it through an eight-question framework and give you a researched, honest plan document. Second, we offer a marketplace of pre-vetted business concepts with startup cost ranges, revenue models, and operator fit guidance already built in.',
+      'Two things. First, we offer structured business planning packages: you bring an idea, we run it through an eight-question framework and give you a researched, honest plan document. Second, we offer a marketplace of pre-vetted business concepts with startup cost ranges, revenue models, and operator fit guidance already built in.',
   },
   {
     question: 'Can you help me if I do not have an idea yet?',
     answer:
-      'Yes. Our Business Concepts marketplace is designed for exactly this situation — founders who want to build something but have not settled on a specific concept. Each concept has been researched and modelled so you can evaluate fit before you commit.',
+      'Yes. Our Business Concepts marketplace is designed for exactly this situation: founders who want to build something but have not settled on a specific concept. Each concept has been researched and modelled so you can evaluate fit before you commit.',
   },
   {
     question: 'Are you based in Canada?',
@@ -45,7 +45,7 @@ const PACKAGES = [
   {
     question: 'Do you guarantee the plan will work?',
     answer:
-      'No planning service can guarantee business success. What we guarantee is honest, independent analysis based on real research — not templates filled with your words. We will tell you clearly when the numbers do not support the concept.',
+      'No planning service can guarantee business success. What we guarantee is honest, independent analysis based on real research, not templates filled with your words. We will tell you clearly when the numbers do not support the concept.',
   },
   {
     question: 'What if my idea is not viable?',
@@ -78,7 +78,7 @@ const CONCEPTS = [
   {
     question: 'Is purchasing a Business Concept the same as buying a franchise?',
     answer:
-      'No. We provide business planning and analysis services — we do not sell franchise rights, require royalties, or mandate operating standards. Business Concepts are independently operated ventures. You own and run your business according to your own judgment.',
+      'No. We provide business planning and analysis services. We do not sell franchise rights, require royalties, or mandate operating standards. Business Concepts are independently operated ventures. You own and run your business according to your own judgment.',
   },
   {
     question: 'Can I request a concept that is not in the marketplace?',

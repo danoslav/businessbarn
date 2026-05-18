@@ -52,10 +52,10 @@ export default function PrivacyPage() {
           <p>We use the following third-party services that may process your data:</p>
           <ul>
             <li>
-              <strong>Vercel</strong> — website hosting (servers may be located outside Canada)
+              <strong>Vercel</strong>: website hosting (servers may be located outside Canada)
             </li>
             <li>
-              <strong>Neon</strong> — database hosting (servers may be located outside Canada)
+              <strong>Neon</strong>: database hosting (servers may be located outside Canada)
             </li>
           </ul>
 

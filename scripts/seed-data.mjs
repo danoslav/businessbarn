@@ -313,7 +313,7 @@ export const resources = [
     title: 'Grants and founder programs in Western Canada',
     slug: 'grants-western-canada',
     category: 'funding',
-    excerpt: 'Where to look for non-dilutive support — and what you need before you apply.',
+    excerpt: 'Where to look for non-dilutive support, and what you need before you apply.',
     readingTime: 9,
   },
   {

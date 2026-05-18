@@ -105,7 +105,7 @@ export default function LeadForm({
         <div className="grid sm:grid-cols-2 gap-4">
           <Field label="Startup budget">
             <select name="startupBudget" className="input">
-              <option value="">— Select range —</option>
+              <option value="">Select range</option>
               <option value="under-10k">Under $10,000</option>
               <option value="10k-30k">$10,000–$30,000</option>
               <option value="30k-75k">$30,000–$75,000</option>
@@ -116,7 +116,7 @@ export default function LeadForm({
           </Field>
           <Field label="Launch timeline">
             <select name="launchTimeline" className="input">
-              <option value="">— Select timeline —</option>
+              <option value="">Select timeline</option>
               <option value="asap">As soon as possible</option>
               <option value="1-3mo">1–3 months</option>
               <option value="3-6mo">3–6 months</option>
@@ -131,7 +131,7 @@ export default function LeadForm({
             name="message"
             rows={4}
             className="input resize-none"
-            placeholder="Tell us what you're weighing up — the more context, the better we can help."
+            placeholder="Tell us what you're weighing up. The more context, the better we can help."
           />
         </Field>
 

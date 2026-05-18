@@ -63,7 +63,7 @@ export default function PackageComparisonTable() {
                   {val === true ? (
                     <span className="text-field-600 font-bold">✓</span>
                   ) : val === false ? (
-                    <span className="text-ink-300">—</span>
+                    <span className="text-ink-300">N/A</span>
                   ) : (
                     <span className="text-ink-600">{val}</span>
                   )}

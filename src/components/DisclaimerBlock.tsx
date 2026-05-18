@@ -10,7 +10,7 @@ export default function DisclaimerBlock({ short = false }: Props) {
       <p className="font-semibold text-ink-800 mb-1">Financial figures are illustrative only</p>
       <p>
         Revenue, margin, and startup cost estimates shown for Business Concepts are based on
-        modelled assumptions and industry benchmarks — they are{' '}
+        modelled assumptions and industry benchmarks. They are{' '}
         <strong>not a guarantee or prediction of your actual results</strong>. Individual outcomes
         vary significantly based on location, operator skill, market conditions, and execution.
         {!short && (

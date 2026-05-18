@@ -30,7 +30,7 @@ const FOUNDER_QUESTIONS = [
 export default function HomePage() {
   return (
     <>
-      {/* Hero — static; not blocked by Payload */}
+      {/* Hero: static; not blocked by Payload */}
       <section className="bg-ink-900 text-white py-16 lg:py-24">
         <div className="site-container">
           <div className="max-w-3xl">
@@ -43,7 +43,7 @@ export default function HomePage() {
               <span className="text-barn-400">Better business starts.</span>
             </h1>
             <p className="text-lg text-ink-300 leading-relaxed mb-8 max-w-xl">
-              We work with founders who want the honest picture before they commit — not glossy
+              We work with founders who want the honest picture before they commit: not glossy
               templates, not vague advice, not hockey-stick projections. Real planning for real
               businesses.
             </p>
@@ -76,8 +76,8 @@ export default function HomePage() {
                 Business planning packages
               </h3>
               <p className="text-sm text-ink-600 leading-relaxed mb-4">
-                You bring the idea. We run it through eight layers of pressure-testing — market
-                demand, costs, competition, location, digital, founder fit, and risk — and give you
+                You bring the idea. We run it through eight layers of pressure-testing: market
+                demand, costs, competition, location, digital, founder fit, and risk. Then we give you
                 a clear plan with real numbers attached.
               </p>
               <Link href="/consulting" className="btn-primary text-sm py-2" data-ga-cta="home_two_ways_packages">
